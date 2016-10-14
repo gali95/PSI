@@ -1,0 +1,11 @@
+10-10-2016
+-zaimplementowanie neuronu w javie, oraz jego nauki dla bramek AND, OR i NOT
+-przetestowanie stworzonego programu na innych danych testowych - maj¹cych nauczyæ neuron rozpoznawania barwy czerwonej, neuron nauczyl sie tego poprawnie
+-zebranie statystyk dotycz¹cych nauki bramek logicznych i utworzenie na ich podstawie wykresów, znajduj¹cych siê w pliku WYKRESY_BRAMKI.xlsx:
+  (kolejnosc wykresów od góry na dó³)
+  wykres 1. zale¿noœæ szybkoœci nauki w iloœci iteracji od wartoœci parametru nauki dla bramki AND
+  wykres 2. zale¿noœæ szybkoœci nauki w iloœci iteracji od wartoœci parametru nauki dla bramki OR
+  wykres 3. zale¿noœæ szybkoœci nauki w iloœci iteracji od wartoœci parametru nauki dla bramki NOT
+
+14-10-2016
+-utworzenie tego pliku
