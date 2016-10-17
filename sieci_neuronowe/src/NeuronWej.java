@@ -5,6 +5,15 @@ public class NeuronWej {
 
     private double value;
     private double weight;
+    private NeuronWyj connection;
+
+    public NeuronWyj getConnection() {
+        return connection;
+    }
+
+    public void setConnection(NeuronWyj connection) {
+        this.connection = connection;
+    }
 
     public double getValue() {
         return value;
@@ -26,6 +35,6 @@ public class NeuronWej {
 
         value = 0;
         weight = 1;
-
+        connection = null;
     }
 }

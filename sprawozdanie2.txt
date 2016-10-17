@@ -1,0 +1,2 @@
+15-10-2016
+-zaimplementowanie sieci neuronowej i mechanizmu jej nauki za pomoca regu³y delta

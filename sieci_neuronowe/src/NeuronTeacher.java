@@ -7,7 +7,7 @@ public class NeuronTeacher {
 
     Neuron subject;
     double n;
-    double[] testEntries;
+    protected double[] testEntries;
     double testResult;
     double neuronResult;
     Boolean correctResult;

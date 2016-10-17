@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Created by Lach on 2016-10-09.
@@ -21,6 +22,14 @@ public class Neuron {
 
     public void setB(double b) {
         this.b = b;
+    }
+
+    public void RandomWeights0to1()
+    {
+        Random random = new Random();
+        for(int i=0;i<GetEntriesSize();i++) {
+            AccessEntry(i).setWeight(((double) random.nextInt(1001) / 1000));
+        }
     }
 
     public Neuron()
@@ -63,6 +72,31 @@ public class Neuron {
     public int GetEntriesSize()
     {
         return entries.size();
+    }
+
+    int ConnectWith(Neuron other)
+    {
+        other.AddEntry();
+        int i = other.GetEntriesSize() -1;
+        other.AccessEntry(i).setConnection(exit);
+        exit.AddConnection(other.AccessEntry(i));
+        return 1;                 // TODO zmienic tak zeby zwracalo ilosc tych samych polaczen (ten samo wyjscie polaczone z tym samym neuronem)
+
+    }
+
+    public void setExitValue(double end)
+    {
+        exit.setValue(end);
+    }
+
+    public double[] getEntriesValue()
+    {
+        double[] ret = new double[entries.size()];
+        for(int i=0;i<entries.size();i++)
+        {
+            ret[i] = entries.get(i).getValue();
+        }
+        return ret;
     }
 
 }
