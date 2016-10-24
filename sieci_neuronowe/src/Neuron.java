@@ -28,7 +28,7 @@ public class Neuron {
     {
         Random random = new Random();
         for(int i=0;i<GetEntriesSize();i++) {
-            AccessEntry(i).setWeight(((double) random.nextInt(1001) / 1000));
+            AccessEntry(i).setWeight(((double) random.nextInt(1001) / 1000)-0.5);
         }
     }
 
@@ -36,6 +36,7 @@ public class Neuron {
     {
         entries = new java.util.LinkedList<NeuronWej>();
         exit = new NeuronWyj();
+        b = 1;
     }
 
     public void CalcExit() {
@@ -97,6 +98,11 @@ public class Neuron {
             ret[i] = entries.get(i).getValue();
         }
         return ret;
+    }
+
+    public Neuron NewNeuron()
+    {
+        return new Neuron();
     }
 
 }

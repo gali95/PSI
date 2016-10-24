@@ -1,0 +1,2 @@
+20-10-2016
+-stworzenie sieci neuronowej do nauki bramki XOR, za pomoc¹ regu³y delta

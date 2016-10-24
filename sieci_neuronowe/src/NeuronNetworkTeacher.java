@@ -3,6 +3,22 @@
  */
 public class NeuronNetworkTeacher extends NeuronTeacher{
 
+    Neuron type;
+
+    public Neuron getType() {
+        return type;
+    }
+
+    public void setType(Neuron type) {
+        this.type = type;
+    }
+
+    NeuronNetworkTeacher()
+    {
+        type = new Neuron();
+        n = 0.6;
+    }
+
     NeuronNetwork subject;
 
     double[] testResult;
@@ -15,12 +31,13 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
     }
     public void CreateNetwork(int[] neuronPerLayer)
     {
-        subject = new NeuronNetwork();
+        subject = new NeuronNetwork(type);
         subject.Init(neuronPerLayer);
     }
     public void TestNetwork()
     {
-        if((testEntries.length != subject.AccessLayer(0).GetNeuronNumber()) || (testResult.length != subject.AccessLayer(subject.GetLayerNumber()-1).AccessNeuron(0).GetEntriesSize()))
+
+        if((testEntries.length != subject.AccessLayer(0).GetNeuronNumber()) || (testResult.length != subject.AccessLayer(subject.GetLayerNumber()-1).GetNeuronNumber()))
         {
             correctResult = false;
             return;
@@ -33,19 +50,19 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
         {
             subject.AccessLayer(i).CalcExits();
         }
+        networkResult = new double[testResult.length];
         for(int i=0;i<networkResult.length;i++)
         {
             networkResult[i] = subject.AccessLayer(subject.GetLayerNumber()-1).AccessNeuron(i).getExitValue();
         }
         correctResult = true;
-
     }
     public void InitErr()
     {
         err.networkResult = networkResult;
         err.properResult = testResult;
     }
-    public void ModifyWeights(Neuron dat)
+    private void ModifyWeights(Neuron dat)
     {
         for(int i=0;i<dat.GetEntriesSize();i++)
         {
@@ -70,6 +87,30 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
     {
         // overload
         return 0;
+    }
+    public void RunRoutine()
+    {
+        SetTestData();
+        TestNetwork();
+        if(correctResult==false) return;
+
+    }
+    public void LearningAfterRunRoutine()
+    {
+        if(correctResult==false) return;
+        InitErr();
+        ModifyWeights();
+    }
+    public void LearningRoutine()
+    {
+        RunRoutine();
+        LearningAfterRunRoutine();
+    }
+    public double GetAnswerQuality()
+    {
+        RunRoutine();
+        InitErr();
+        return err.CountError();
     }
 
 

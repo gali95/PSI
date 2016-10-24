@@ -3,7 +3,17 @@
  */
 public class NeuronNetwork {
 
+    Neuron neuronType;
     WarstwaNeuronow[] network;
+
+    public NeuronNetwork()
+    {
+        neuronType = new Neuron();
+    }
+    public NeuronNetwork(Neuron type)
+    {
+        neuronType = type;
+    }
 
     public void Init(int[] neuronsPerLayer)
     {
@@ -11,6 +21,7 @@ public class NeuronNetwork {
         for(int i=0;i<neuronsPerLayer.length;i++)
         {
             network[i] = new WarstwaNeuronow();
+            network[i].setNeuronType(neuronType);
             network[i].DodajPuste(neuronsPerLayer[i]);
         }
 

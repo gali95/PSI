@@ -5,6 +5,16 @@ import java.util.LinkedList;
  */
 public class WarstwaNeuronow {
 
+    Neuron neuronType;
+
+    public Neuron getNeuronType() {
+        return neuronType;
+    }
+
+    public void setNeuronType(Neuron neuronType) {
+        this.neuronType = neuronType;
+    }
+
     private java.util.List<Neuron> content;
 
     WarstwaNeuronow()
@@ -13,7 +23,7 @@ public class WarstwaNeuronow {
     }
     public void DodajPuste(int n)
     {
-        for(int i=0;i<n;i++) content.add(new Neuron());
+        for(int i=0;i<n;i++) content.add(neuronType.NewNeuron());
     }
     public void RandomAllWeights()
     {
@@ -27,7 +37,7 @@ public class WarstwaNeuronow {
     }
 
     public void AddNeuron() {
-        content.add(new Neuron());
+        content.add(neuronType.NewNeuron());
     }
     public Neuron AccessNeuron(int i)
     {
