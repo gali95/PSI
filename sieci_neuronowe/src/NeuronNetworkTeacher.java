@@ -16,7 +16,7 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
     NeuronNetworkTeacher()
     {
         type = new Neuron();
-        n = 0.6;
+        n = 0.2;
     }
 
     NeuronNetwork subject;
@@ -66,7 +66,12 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
     {
         for(int i=0;i<dat.GetEntriesSize();i++)
         {
-            dat.AccessEntry(i).setWeight(dat.AccessEntry(i).getWeight()+(n*(err.CountError())*dat.AccessEntry(i).getValue()));
+            double old_waga = dat.AccessEntry(i).getWeight();
+            double blad = err.CountError();
+            double wejscie = dat.AccessEntry(i).getValue();
+            dat.AccessEntry(i).setWeight(old_waga+(n*blad*wejscie));
+            double new_waga = dat.AccessEntry(i).getWeight();
+            double a = new_waga;
         }
     }
     public void ModifyWeights()

@@ -28,7 +28,7 @@ public class Neuron {
     {
         Random random = new Random();
         for(int i=0;i<GetEntriesSize();i++) {
-            AccessEntry(i).setWeight(((double) random.nextInt(1001) / 1000)-0.5);
+            AccessEntry(i).setWeight((((double)random.nextInt(1001) / 1000)-0.5)*2);
         }
     }
 

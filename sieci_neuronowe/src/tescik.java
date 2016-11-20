@@ -45,7 +45,7 @@ public class tescik {
 
         network = new XORNetwork();
         network.eloha = this;
-        int[] ilosciNeuronow = {2,2,1};
+        int[] ilosciNeuronow = {2,10,10,1};
         network.CreateNetwork(ilosciNeuronow);
         ActionListener fajny = new ActionListener() {
             @Override
@@ -61,7 +61,7 @@ public class tescik {
                 }
                 else if(e.getSource()==uczButton)
                 {
-                    network.LearnUntil(0.7);
+                    network.LearnUntil(0.99);
                     labalowynikoitero.setText(Integer.toString(network.itersToLearn));
                 }
             }

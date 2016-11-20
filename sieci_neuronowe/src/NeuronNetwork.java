@@ -47,4 +47,27 @@ public class NeuronNetwork {
         return network.length;
     }
 
+    public double[] RunNetwork(double[] entries)
+    {
+        double[] networkResult = null;
+        if((entries.length != AccessLayer(0).GetNeuronNumber()))
+        {
+            return networkResult;
+        }
+        for(int i=0;i<entries.length;i++)
+        {
+            AccessLayer(0).AccessNeuron(i).setExitValue(entries[i]);
+        }
+        for(int i=1;i<GetLayerNumber();i++)
+        {
+            AccessLayer(i).CalcExits();
+        }
+        networkResult = new double[AccessLayer(GetLayerNumber()-1).GetNeuronNumber()];
+        for(int i=0;i<networkResult.length;i++)
+        {
+            networkResult[i] = AccessLayer(GetLayerNumber()-1).AccessNeuron(i).getExitValue();
+        }
+        return networkResult;
+    }
+
 }

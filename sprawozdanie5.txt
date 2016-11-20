@@ -1,0 +1,11 @@
+14.11.2016
+
+PROJEKT:
+-po pierwszej próbie zaimplementowania sieci neuronowej z propagacj¹ wsteczn¹ doszed³em do wniosku ¿e tak naprawde to co nazywa³em danymi wyjœciowymi do uczenia sieci nimi nie jest, dlatego wiêc na ten czas zaniecham tej metody i spróbuje stworzyæ prosty algorytm genetyczny w którym stworze wiele sieci o takiej samej strukturze wejœæ, wyjœæ i neuronów, jedyn¹ ich ró¿nic¹ bêd¹ wagi. Nastêpnie te "inteligencje" poddam testom i na podstawie ich rezultatów ograniczonych do jednej zmiennej w skali od 0 do 10 jak bardzo cel zosta³ osi¹gniêty. PóŸniej wybiore te inteligencje którym posz³o najlepiej i "wymieszam" ich wagi w celu uzyskania nastêpnego pokolenia sieci, dalej kontynuuj¹c ich testowanie i mieszanie sieci a¿ do (w teorii) uzyskania wystarczaj¹co skutecznego SI.
+-dodanie do repozytorium projektu gry, do którego bêde implementowa³ SI.
+
+ZAJÊCIA:
+-przeczytanie teori dotycz¹cej uczenia sieci metod¹ Hebba.
+
+20.11.2016
+-napisanie tego sprawozdania i jego upload do repozytorium
