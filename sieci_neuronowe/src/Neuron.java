@@ -28,7 +28,7 @@ public class Neuron {
     {
         Random random = new Random();
         for(int i=0;i<GetEntriesSize();i++) {
-            AccessEntry(i).setWeight((((double)random.nextInt(1001) / 1000)-0.5)*2);
+            AccessEntry(i).setWeight((((double)random.nextInt(1001) / 1000)));//-0.5)*2);
         }
     }
 
@@ -52,7 +52,7 @@ public class Neuron {
     }
 
     public void AddEntry() {
-        entries.add(new NeuronWej());
+        entries.add(new NeuronWej(this));
     }
 
     public NeuronWej AccessEntry(int i)
@@ -104,5 +104,7 @@ public class Neuron {
     {
         return new Neuron();
     }
+
+
 
 }

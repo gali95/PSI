@@ -97,7 +97,7 @@ public class XORNetwork extends NeuronNetworkTeacher{
     public void LearnUntil(double diff)
     {
         itersToLearn = 0;
-        dopBlad = diff;
+        dopBlad = 1-diff;
         for(int i=0;i<4;i++)
         {
             while(GetNetworkQuality(i,itersToLearn)<1)

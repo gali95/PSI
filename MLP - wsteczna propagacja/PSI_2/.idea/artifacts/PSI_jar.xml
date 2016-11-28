@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PSI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PSI_jar</output-path>
+    <root id="archive" name="PSI.jar">
+      <element id="module-output" name="PSI" />
+    </root>
+  </artifact>
+</component>

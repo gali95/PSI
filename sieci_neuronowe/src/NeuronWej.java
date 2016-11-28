@@ -6,6 +6,7 @@ public class NeuronWej {
     private double value;
     private double weight;
     private NeuronWyj connection;
+    private Neuron source;
 
     public NeuronWyj getConnection() {
         return connection;
@@ -31,10 +32,16 @@ public class NeuronWej {
         this.weight = weight;
     }
 
-    public NeuronWej() {
+    public NeuronWej(Neuron targ) {
 
         value = 0;
         weight = 1;
         connection = null;
+        source = targ;
+    }
+
+    public Neuron getNeuron()
+    {
+        return source;
     }
 }

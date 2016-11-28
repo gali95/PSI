@@ -120,35 +120,35 @@ public class ExampleGame {
     public ExampleGame()
     {
         PlayerUpAction npa = new PlayerUpAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("W"), "nastepnyButtonKeyboardShortcut");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("W"), "nastepnyButtonKeyboardShortcut");
         panel1.getActionMap().put("nastepnyButtonKeyboardShortcut", npa);
 
         PlayerDownAction npa2 = new PlayerDownAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("S"), "a2");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("S"), "a2");
         panel1.getActionMap().put("a2", npa2);
 
         PlayerLeftAction npa3 = new PlayerLeftAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("A"), "a3");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("A"), "a3");
         panel1.getActionMap().put("a3", npa3);
 
         PlayerRightAction npa4 = new PlayerRightAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("D"), "a4");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("D"), "a4");
         panel1.getActionMap().put("a4", npa4);
 
         PlayerAttackUpAction npa5 = new PlayerAttackUpAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("I"), "a5");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("I"), "a5");
         panel1.getActionMap().put("a5", npa5);
 
         PlayerAttackDownAction npa6 = new PlayerAttackDownAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("K"), "a6");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("K"), "a6");
         panel1.getActionMap().put("a6", npa6);
 
         PlayerAttackLeftAction npa7 = new PlayerAttackLeftAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("J"), "a7");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("J"), "a7");
         panel1.getActionMap().put("a7", npa7);
 
         PlayerAttackRightAction npa8 = new PlayerAttackRightAction();
-        panel1.getInputMap(2).put(KeyStroke.getKeyStroke("L"), "a8");
+        panel1.getInputMap().put(KeyStroke.getKeyStroke("L"), "a8");
         panel1.getActionMap().put("a8", npa8);
 
     }

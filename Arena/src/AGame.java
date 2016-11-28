@@ -21,7 +21,7 @@ public class AGame {
         h1 = null;
         h2 = null;
         timeLimited = true;
-        gameStartTime = 20;
+        gameStartTime = 60;
         repeatGame = true;
         wipeAll = false;
     }

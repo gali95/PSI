@@ -45,7 +45,7 @@ public class tescik {
 
         network = new XORNetwork();
         network.eloha = this;
-        int[] ilosciNeuronow = {2,10,10,1};
+        int[] ilosciNeuronow = {2,100,100,1};
         network.CreateNetwork(ilosciNeuronow);
         ActionListener fajny = new ActionListener() {
             @Override

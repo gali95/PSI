@@ -8,7 +8,7 @@ public class APlayer extends ACharacter {
 
     public APlayer() throws IOException {
         super("player.png");
-        moveSpeed = 25;
+        moveSpeed = 20;
     }
     public void Destroy()
     {

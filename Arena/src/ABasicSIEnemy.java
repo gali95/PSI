@@ -31,9 +31,10 @@ public class ABasicSIEnemy extends ACharacter{
     public double distanceToRun;
     public Boolean MaintainDistance()
     {
-        if(Math2D.CountDistance(positionX,positionY,Enemy.positionX,Enemy.positionY) < distanceToRun)
+        Vector2 besto = SIHelper.bestPath();
+        if(besto.x != 0 || besto.y != 0)
         {
-            StepIntoDirection((int)SIHelper.bestPath().x,(int)SIHelper.bestPath().y);
+            StepIntoDirection((int)besto.x,(int)besto.y);
             return true;
         }
         return false;

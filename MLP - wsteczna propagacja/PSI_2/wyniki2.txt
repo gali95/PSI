@@ -1,0 +1,6 @@
+Srednie wyniki dla 5 po 2 neuronow ( 1000):
+Czas calej nauki: 0.3142903405510001
+Czas jednej nauki: 1.4807723510691575E-6
+Ilosc iteracji do nauczenia sieci: 43578
+
+

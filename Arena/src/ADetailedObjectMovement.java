@@ -11,15 +11,28 @@ public class ADetailedObjectMovement {
     Boolean immobilized;
     double immobilizedTimeLeft;
     AObject target;
+    AObject lockedFollowTarget;
+    Vector2 lockedFollowOffset;
 
     public ADetailedObjectMovement()
     {
         speedY = 0;
         speedY = 0;
         immobilized = false;
+        lockedFollowTarget = null;
+    }
+    public void FollowSomeone(AObject target, Vector2 offset)
+    {
+        lockedFollowTarget = target;
+        lockedFollowOffset = new Vector2((int)offset.x,(int)offset.y);
+    }
+    public void UnfollowSomeone()
+    {
+        lockedFollowTarget = null;
     }
     public void ImmobilizeForTime(double ammount)
     {
+        if(lockedFollowTarget!=null) return;
         if(speedX != 0 || speedY != 0) return;
         if(immobilized) return;
         if(ammount<=0) return;
@@ -32,6 +45,10 @@ public class ADetailedObjectMovement {
         Vector2 ret = new Vector2();
         ret.x = 0;
         ret.y = 0;
+        if(lockedFollowTarget!=null)
+        {
+            return CountFollow();
+        }
         if(immobilized)
         {
             immobilizedTimeLeft -= deltaTime;
@@ -119,6 +136,22 @@ public class ADetailedObjectMovement {
 
 
     }
+    public Vector2 CountFollow()
+    {
+        Vector2 ret = new Vector2();
+        ret.y = 0;
+        ret.x = 0;
+        if(!IsMovePossible(lockedFollowTarget.positionX + (int)lockedFollowOffset.x,lockedFollowTarget.positionY + (int)lockedFollowOffset.y))
+        {
+            target.Destroy();
+            return ret;
+        }
+        detailedPositionX = lockedFollowTarget.physics.detailedPositionX;
+        detailedPositionY = lockedFollowTarget.physics.detailedPositionY;
+        ret.x = (lockedFollowTarget.positionX + lockedFollowOffset.x) -  target.positionX;
+        ret.y = (lockedFollowTarget.positionY + lockedFollowOffset.y) -  target.positionY;
+        return ret;
+    }
     public Boolean IsMovePossible(int targetX,int targetY)
     {
         if(targetX<0) return false;
@@ -130,6 +163,7 @@ public class ADetailedObjectMovement {
     public void MoveToInTime(int targetX,int targetY,double duration)
     {
         if(!IsMovePossible(targetX,targetY)) return;
+        if(lockedFollowTarget!=null) return;
         if(immobilized) return;
         if(duration <= 0) return;
         if(speedX != 0 || speedY != 0) return;
@@ -141,6 +175,7 @@ public class ADetailedObjectMovement {
     public void MoveToWithSpeed(int targetX,int targetY,double speed)
     {
         if(!IsMovePossible(targetX,targetY)) return;
+        if(lockedFollowTarget!=null) return;
         if(immobilized) return;
         if(speed <= 0 ) return;
         if(speedX != 0 || speedY != 0) return;

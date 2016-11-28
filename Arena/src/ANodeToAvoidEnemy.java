@@ -14,7 +14,7 @@ public class ANodeToAvoidEnemy extends ANodeToAvoid {
 
     protected double CountAversion(double distance)
     {
-        double moduler = -2.4;
+        double moduler = -3.4;
         if(distance<5)
         {
             return moduler * (5 - distance);

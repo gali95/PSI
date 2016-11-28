@@ -1,0 +1,6 @@
+Srednie wyniki dla 100 po 20 neuronow ( 1000):
+Czas calej nauki: 0.012978388875999999
+Czas jednej nauki: 0.0011005942965000013
+Ilosc iteracji do nauczenia sieci: 1.0
+
+

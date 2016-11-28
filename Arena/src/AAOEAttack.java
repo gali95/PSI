@@ -9,10 +9,11 @@ public class AAOEAttack extends AObject{
     ACharacter Acaster;
     double remainingTime;
 
-    public AAOEAttack(ACharacter caster,double duration) throws IOException {
+    public AAOEAttack(ACharacter caster,double duration,Vector2 offset) throws IOException {
         super("claws.png");
         remainingTime = duration;
         Acaster = caster;
+        physics.FollowSomeone(caster,offset);
     }
 
     public void InteractWith(AObject other)

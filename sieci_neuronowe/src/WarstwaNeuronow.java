@@ -24,6 +24,7 @@ public class WarstwaNeuronow {
     public void DodajPuste(int n)
     {
         for(int i=0;i<n;i++) content.add(neuronType.NewNeuron());
+        //content.get(n).setExitValue(1);
     }
     public void RandomAllWeights()
     {

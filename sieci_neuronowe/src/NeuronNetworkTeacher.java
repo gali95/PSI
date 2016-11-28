@@ -16,7 +16,7 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
     NeuronNetworkTeacher()
     {
         type = new Neuron();
-        n = 0.2;
+        n = 0.01;
     }
 
     NeuronNetwork subject;
@@ -62,16 +62,28 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
         err.networkResult = networkResult;
         err.properResult = testResult;
     }
+    private void BackwardErrorPropagation()
+    {
+        for(int i=0;i<subject.AccessLayer(subject.GetLayerNumber()-1).GetNeuronNumber()-1;i++)
+        {
+            ((NeuronBetter)subject.AccessLayer(subject.GetLayerNumber()-1).AccessNeuron(i)).setLastLayerError(testResult[i]);
+        }
+        for(int i=subject.GetLayerNumber()-2;i>0;i--)
+        {
+            for(int j=0;j<subject.AccessLayer(i).GetNeuronNumber();j++)
+            {
+                ((NeuronBetter)subject.AccessLayer(i).AccessNeuron(j)).setError();
+            }
+        }
+    }
     private void ModifyWeights(Neuron dat)
     {
         for(int i=0;i<dat.GetEntriesSize();i++)
         {
             double old_waga = dat.AccessEntry(i).getWeight();
-            double blad = err.CountError();
+            double blad = err.CountError();//((NeuronBetter)dat).getError();
             double wejscie = dat.AccessEntry(i).getValue();
             dat.AccessEntry(i).setWeight(old_waga+(n*blad*wejscie));
-            double new_waga = dat.AccessEntry(i).getWeight();
-            double a = new_waga;
         }
     }
     public void ModifyWeights()
@@ -104,6 +116,7 @@ public class NeuronNetworkTeacher extends NeuronTeacher{
     {
         if(correctResult==false) return;
         InitErr();
+        //BackwardErrorPropagation();
         ModifyWeights();
     }
     public void LearningRoutine()

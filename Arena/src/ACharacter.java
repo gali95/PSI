@@ -12,6 +12,8 @@ public class ACharacter extends AObject{
     AHeritage watashiwasoru;
     double fireballCooldown,fireballRemainingCooldown;
     double attackCooldown,attackRemainingCooldown;
+    
+    public Boolean MoveUpState,MoveDownState,MoveRightState,MoveLeftState,AttackUpState,AttackDownState,AttackRightState,AttackLeftState;
 
     public ACharacter(String imgPath) throws IOException {
         super(imgPath);
@@ -22,6 +24,15 @@ public class ACharacter extends AObject{
         attackCooldown = 1;
         fireballRemainingCooldown = 0;
         attackRemainingCooldown = 0;
+
+        MoveUpState = false;
+        MoveDownState = false;
+        MoveRightState = false;
+        MoveLeftState = false;
+        AttackUpState= false;
+        AttackDownState = false;
+        AttackRightState = false;
+        AttackLeftState = false;
     }
 
 
@@ -55,15 +66,49 @@ public class ACharacter extends AObject{
         if(physics.IsMovePossible(positionX + x,positionY+y))
         {
             try {
-                location.InsertObject(new AAOEAttack(this,attackCooldown),positionX + x,positionY+y);
+                location.InsertObject(new AAOEAttack(this,attackCooldown,new Vector2(x,y)),positionX + x,positionY+y);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            physics.ImmobilizeForTime(attackCooldown);
+            //physics.ImmobilizeForTime(attackCooldown);
             attackRemainingCooldown = attackCooldown;
         }
         return;
     }
+    public void MoveUp(Boolean keyState)
+    {
+        StepIntoDirection(0,-1);
+    }
+    public void MoveDown(Boolean keyState)
+    {
+        StepIntoDirection(0,1);
+    }
+    public void MoveRight(Boolean keyState)
+    {
+        StepIntoDirection(1,0);
+    }
+    public void MoveLeft(Boolean keyState)
+    {
+        StepIntoDirection(-1,0);
+    }
+
+    public void AttackUp(Boolean keyState)
+    {
+        AttackOnDirection(0,-1);
+    }
+    public void AttackDown(Boolean keyState)
+    {
+        AttackOnDirection(0,1);
+    }
+    public void AttackRight(Boolean keyState)
+    {
+        AttackOnDirection(1,0);
+    }
+    public void AttackLeft(Boolean keyState)
+    {
+        AttackOnDirection(-1,0);
+    }
+
     public void MoveUp()
     {
         StepIntoDirection(0,-1);

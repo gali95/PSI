@@ -1,0 +1,3 @@
+28-11-2016
+-próba nauczenia wielowarstwowej sieci neuronowej, rozwi¹zywania bramki logicznej XOR, metod¹ propagacji wstecznej, przy u¿yciu gotowej aplikacji i zmiany jej ustawieñ (autor: Piotr Maœlanka)
+-wyniki tej próby zosta³y zapisane w folderze "MLP - wsteczna propagacja" w arkuszu excela wraz z podpisanymi wykresami, program do wy¿ej wspomnianego rodzaju sieci równie¿ znajduje siê w tym samym folderze

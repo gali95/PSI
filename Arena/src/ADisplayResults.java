@@ -17,7 +17,7 @@ public class ADisplayResults extends AHeritage {
     public void GameEnded(double characterPoints)
     {
         if(characterPoints==1) playerScore++;
-        if(characterPoints==-1) playerScore++;
+        if(characterPoints==-1) CPUScore++;
         if(characterPoints==0)
         {
             playerScore++;
