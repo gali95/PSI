@@ -1,0 +1,7 @@
+6.12.2016r.
+-Projekt:
+ - utworzenie funkcjonalnoœci pozwalaj¹cej na wykorzystanie wielowarstwowej sieci neuronowej do sterowania przeciwnikiem w grze.
+10.12.2016r.
+ - napisanie tego sprawozdania, wraz z zaleg³ym postêpem
+ - utworzenie wstêpnego interfejsu do zarz¹dzania prostym genetycznym algorytmem maj¹cym tworzyæ sieci do wykorzystania w grze jako sztuczna inteligencja przeciwnika
+ - upload wszystkich plików zwi¹zanych z tym sprawozdaniem

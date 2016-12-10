@@ -1,3 +1,6 @@
+package NNetworks;
+
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
@@ -5,10 +8,10 @@ import java.util.Random;
 /**
  * Created by Lach on 2016-11-14.
  */
-public class NetworkEvolution {
+public class NetworkEvolution implements Serializable{
 
-    private EvolutionaryNeuronNetwork[] networks;
-    private int weightsCount;
+    protected EvolutionaryNeuronNetwork[] networks;
+    protected int weightsCount;
 
     public NetworkEvolution()
     {
@@ -24,7 +27,7 @@ public class NetworkEvolution {
         }
         CountWeights();
     }
-    private void CountWeights()
+    protected void CountWeights()
     {
         weightsCount = 0;
         NeuronNetwork l = networks[0];
@@ -39,7 +42,7 @@ public class NetworkEvolution {
             }
         }
     }
-    private int GetNetworksCount()
+    protected int GetNetworksCount()
     {
         return networks.length;
     }
@@ -47,7 +50,7 @@ public class NetworkEvolution {
     {
         return networks[i];
     }
-    private double[] getWeights(int networkIndex)
+    protected double[] getWeights(int networkIndex)
     {
         double[] ret = new double[weightsCount];
         int counter = 0;
@@ -66,7 +69,7 @@ public class NetworkEvolution {
         return ret;
 
     }
-    private void setWeights(int networkIndex, double[] weights)
+    protected void setWeights(int networkIndex, double[] weights)
     {
         if(weights.length != weightsCount) return;
         int counter = 0;
@@ -83,7 +86,7 @@ public class NetworkEvolution {
             }
         }
     }
-    private double[] mixWeights(double[] firsts,double[] seconds)
+    protected double[] mixWeights(double[] firsts,double[] seconds)
     {
         double[] ret = null;
         if(firsts.length != seconds.length) return ret;
@@ -113,18 +116,18 @@ public class NetworkEvolution {
         }
         return ret;
     }
-    private void ResetGrades()
+    protected void ResetGrades()
     {
         for(int i=0;i<networks.length;i++)
         {
-            networks[i].grade = 0;
+            networks[i].setGrade(0);
         }
     }
     public void ChangeGrade(int network_index)
     {
-        networks[network_index].grade += network_index;
+        networks[network_index].setGrade(networks[network_index].getGrade() + network_index);
     }
-    private void SortByGrades()
+    protected void SortByGrades()
     {
         Arrays.sort(networks, new Comparator<EvolutionaryNeuronNetwork>() {
             public int compare(EvolutionaryNeuronNetwork o1, EvolutionaryNeuronNetwork o2) {
@@ -133,11 +136,11 @@ public class NetworkEvolution {
         });
     }
 
-    private int championsToPreserveNumber;
+    public int championsToPreserveNumber;
 
-    private void setRepeatMultipleNumber(int index)
+    protected void setRepeatMultipleNumber(int index)
     {
-        networks[index].repeatMultipleNumber = 1;
+        networks[index].setRepeatMultipleNumber(1);
     }
 
     private double[][] GetChampionsGrades()
@@ -168,7 +171,7 @@ public class NetworkEvolution {
                 {
                     if(i!=j)
                     {
-                        for(int l=0;l<networks[i].repeatMultipleNumber;l++) {
+                        for(int l=0;l<networks[i].getRepeatMultipleNumber();l++) {
                             setWeights(k++, mixWeights(source[i], source[j]));
                             if(k==thingsLeft) break;
                         }

@@ -6,6 +6,7 @@ import java.util.Comparator;
 public class EvolutionaryNeuronNetwork extends NeuronNetwork implements Comparable<EvolutionaryNeuronNetwork>{
 
     double grade;
+    int repeatMultipleNumber;
 
     public EvolutionaryNeuronNetwork()
     {
