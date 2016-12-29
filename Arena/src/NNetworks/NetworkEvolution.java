@@ -97,7 +97,7 @@ public class NetworkEvolution implements Serializable{
         }
         for(int i=firsts.length/2;i<firsts.length;i++)
         {
-            ret[i] = 0;
+            ret[i] = 1;
         }
         Random random = new Random();
         double tymcz;

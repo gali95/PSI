@@ -3,6 +3,7 @@ package AActualGame;
 import Matho.Vector2;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class AMap {
 
     AMapTile[][] tiles;
     List<AObject> allObjects;
+    List<AFireBall> fireballs;
     public APlayer player;
     public AGame zarzadzacz;
 
@@ -200,6 +202,33 @@ public class AMap {
             }
         }
         return ret;
+    }
+    public double[] getFireballsData()
+    {
+        double[] ret = new double[6];
+        int s=0;
+        for(int i=0;i<ret.length;i++) ret[i] = 0;
+        for(int i=0;i<allObjects.size() && s<2;i++)
+        {
+            if(allObjects.get(i).getClass()==AFireBall.class)
+            {
+                ret[s*3] = 1;
+                ret[s*3+1] = allObjects.get(i).positionX;
+                ret[s*3+2] = allObjects.get(i).positionY;
+                s++;
+            }
+        }
+        return ret;
+
+    }
+
+    public int GetSizeX()
+    {
+        return tiles.length;
+    }
+    public int GetSizeY()
+    {
+        return tiles[0].length;
     }
 
 }

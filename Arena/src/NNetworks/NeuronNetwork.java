@@ -9,6 +9,8 @@ public class NeuronNetwork implements Serializable {
 
     Neuron neuronType;
     WarstwaNeuronow[] network;
+    public int weightsCount;
+    public int[] layersScheme;
 
     public NeuronNetwork()
     {
@@ -21,6 +23,7 @@ public class NeuronNetwork implements Serializable {
 
     public void Init(int[] neuronsPerLayer)
     {
+        layersScheme = neuronsPerLayer;
         network = new WarstwaNeuronow[neuronsPerLayer.length];
         for(int i=0;i<neuronsPerLayer.length;i++)
         {
@@ -40,6 +43,36 @@ public class NeuronNetwork implements Serializable {
         for(int i=1;i<neuronsPerLayer.length;i++)
         {
             network[i].RandomAllWeights();
+        }
+        weightsCount = 0;
+        for(int i=0;i<neuronsPerLayer.length-1;i++)
+        {
+            weightsCount += neuronsPerLayer[i] * neuronsPerLayer[i+1];
+        }
+    }
+    public void InitWithoutWeights(int[] neuronsPerLayer)
+    {
+        layersScheme = neuronsPerLayer;
+        network = new WarstwaNeuronow[neuronsPerLayer.length];
+        for(int i=0;i<neuronsPerLayer.length;i++)
+        {
+            network[i] = new WarstwaNeuronow();
+            network[i].setNeuronType(neuronType);
+            network[i].DodajPuste(neuronsPerLayer[i]);
+        }
+        for(int i=0;i<neuronsPerLayer[0];i++)
+        {
+            network[0].AccessNeuron(i).SetEntries(1);
+        }
+        for(int i=0;i<neuronsPerLayer.length-1;i++)
+        {
+            network[i].ConnectWithOtherWarstwa(network[i+1]);
+        }
+
+        weightsCount = 0;
+        for(int i=0;i<neuronsPerLayer.length-1;i++)
+        {
+            weightsCount += neuronsPerLayer[i] * neuronsPerLayer[i+1];
         }
     }
     public void RandomWeights()
@@ -84,14 +117,16 @@ public class NeuronNetwork implements Serializable {
         return networkResult;
     }
 
-    public static void main(String[] args)
+    public NeuronNetwork CopyWithoutWeights()
     {
-        NeuronNetwork tmp = new NeuronNetwork(new NeuronBetter());
-        int[] entry = {300,200,100,100,100};
-        long time = System.nanoTime();
-        tmp.Init(entry);
-        System.out.println("Czas: "+(double)(System.nanoTime()-time)/1000000000);
-
+        NeuronNetwork ret = new NeuronNetwork(neuronType);
+        int[] layersSizes= new int[GetLayerNumber()];
+        for(int i=0;i<layersSizes.length;i++)
+        {
+            layersSizes[i] = network[i].GetNeuronNumber();
+        }
+        ret.InitWithoutWeights(layersSizes);
+        return ret;
     }
 
 }

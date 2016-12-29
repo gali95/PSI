@@ -1,5 +1,7 @@
 package AActualGame;
 
+import GeneticAlghorithm.basicClassesInterfaces.Geneable;
+import Matho.Math2D;
 import Matho.Vector2;
 import NNetworks.DoubleEvolutionNetwork.NPCNetwork;
 import NNetworks.NeuronBetter;
@@ -13,12 +15,20 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
 
     private NPCNetwork si;
     private int viewRange;
+    public Geneable thingToGrade;
+    private double thingToGradeParam;
+    private double thingToGradeStartTime;
+    private double thingToGradeActualTime;
 
     public ANeuralNetworkSIEnemy() throws IOException {
         super(4);
         moveSpeed = 20;
         viewRange = 1;
+        thingToGradeParam = 2;
+        thingToGradeStartTime = 1;
+        thingToGradeActualTime = thingToGradeStartTime;
     }
+
     public void setRange(int nRange)
     {
         viewRange=nRange;
@@ -45,52 +55,95 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
         si.attack.Init(wymiary);
         si.movement.Init(wymiary);
     }
+    public double[] getNetworkEntry()
+    {
+        double[] entry = new double[(viewRange*2+1)*(viewRange*2+1)*3+3];
+        Boolean[][] fields = location.IsThereFloor(new Vector2(positionX,positionY),new Vector2(viewRange,viewRange));
+        Boolean[][] fireballs = location.IsThereFireball(new Vector2(positionX,positionY),new Vector2(viewRange,viewRange));
+        Boolean[][] enemyLoc = location.IsThereFireball(new Vector2(positionX,positionY),new Vector2(viewRange,viewRange));
+        int k=0;
+        for(int i=0;i<viewRange*2+1;i++)
+        {
+            for(int j=0;j<viewRange*2+1;j++)
+            {
+                if(fields[i][j])
+                    entry[k++] = 1;
+                else
+                    entry[k++] = 0;
+            }
+        }
+        for(int i=0;i<viewRange*2+1;i++)
+        {
+            for(int j=0;j<viewRange*2+1;j++)
+            {
+                if(fireballs[i][j])
+                    entry[k++] = 1;
+                else
+                    entry[k++] = 0;
+            }
+        }
+        for(int i=0;i<viewRange*2+1;i++)
+        {
+            for(int j=0;j<viewRange*2+1;j++)
+            {
+                if(enemyLoc[i][j])
+                    entry[k++] = 1;
+                else
+                    entry[k++] = 0;
+            }
+        }
+        entry[entry.length-3] = (double)HP/100;
+        entry[entry.length-2] = (double)enemy.HP/100;
+        entry[entry.length-1] = jury.GetRemainingTime();
 
+        return entry;
+    }
+    public double[] getShorterEntry()
+    {
+        double[] ret = new double[15];
+        double[] partRet = location.getFireballsData();
+        double paramIt = 10;
+        for(int i=0;i<partRet.length;i++) ret[i] = partRet[i];
+        for(int i=0;i<2;i++)
+        {
+            ret[i*3+1] -= positionX;
+            ret[i*3+1] /= paramIt;
+            ret[i*3+2] -= positionY;
+            ret[i*3+2] /= paramIt;
+        }
+        ret[6] = (enemy.positionX - positionX) / paramIt;
+        ret[7] = (enemy.positionY - positionY) / paramIt;
+        ret[8] = positionX/ paramIt;
+        ret[9] = positionY/ paramIt;
+        ret[10] = (location.GetSizeX() - positionX)/ paramIt;
+        ret[11] = (location.GetSizeY() - positionY)/ paramIt;
+        ret[12] = (double)HP/100;
+        ret[13] = (double)enemy.HP/100;
+        ret[14] = jury.GetRemainingTime();
+
+        return ret;
+    }
     public void MyRoutine(double dTime)
     {
         super.MyRoutine(dTime);
         if(location == null || enemy==null) return;
+
+
+        if(thingToGrade != null) {
+            thingToGradeActualTime -= dTime;
+            if (thingToGradeActualTime <= 0) {
+                thingToGradeActualTime = thingToGradeStartTime;
+                double distance = Math2D.CountDistance(positionX,positionY,enemy.positionX,enemy.positionY);
+                if(distance<3) distance = (3-distance)*4;
+                else distance = 0;
+                thingToGrade.SetGrades(thingToGrade.GetGrades() + (thingToGradeParam*distance));
+            }
+        }
+
+
         if(attackRemainingCooldown <= 0 || moveRemainingCooldown <= 0)
         {
-            double[] entry = new double[(viewRange*2+1)*(viewRange*2+1)*3+3];
-            Boolean[][] fields = location.IsThereFloor(new Vector2(positionX,positionY),new Vector2(viewRange,viewRange));
-            Boolean[][] fireballs = location.IsThereFireball(new Vector2(positionX,positionY),new Vector2(viewRange,viewRange));
-            Boolean[][] enemyLoc = location.IsThereFireball(new Vector2(positionX,positionY),new Vector2(viewRange,viewRange));
-            int k=0;
-            for(int i=0;i<viewRange*2+1;i++)
-            {
-                for(int j=0;j<viewRange*2+1;j++)
-                {
-                    if(fields[i][j])
-                        entry[k++] = 1;
-                    else
-                        entry[k++] = 0;
-                }
-            }
-            for(int i=0;i<viewRange*2+1;i++)
-            {
-                for(int j=0;j<viewRange*2+1;j++)
-                {
-                    if(fireballs[i][j])
-                        entry[k++] = 1;
-                    else
-                        entry[k++] = 0;
-                }
-            }
-            for(int i=0;i<viewRange*2+1;i++)
-            {
-                for(int j=0;j<viewRange*2+1;j++)
-                {
-                    if(enemyLoc[i][j])
-                        entry[k++] = 1;
-                    else
-                        entry[k++] = 0;
-                }
-            }
-            entry[entry.length-3] = (double)HP/100;
-            entry[entry.length-2] = (double)enemy.HP/100;
-            entry[entry.length-1] = jury.GetRemainingTime();
-
+            double[] entry = getShorterEntry();
             if(attackRemainingCooldown <= 0)
             {
                 double[] attackChoice = si.attack.RunNetwork(entry);
@@ -158,6 +211,11 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
                         break;
                 }
                 StepIntoDirection(x,y);
+                /*
+                if(thingToGrade!=null) {
+                    double distChange = Math2D.CountDistance(positionX, positionY, enemy.positionX, enemy.positionY) - Math2D.CountDistance((positionX + x), (positionY + y), enemy.positionX, enemy.positionY);
+                    if (distChange > 0) thingToGrade.SetGrades(thingToGrade.GetGrades() + distChange);
+                }*/
             }
         }
     }

@@ -1,9 +1,11 @@
 package GUIStuff;
 
 import AActualGame.ATrainSIGame;
+import GeneticAlghorithm.defaultImplementations.AGameSi.OnlyWeights.GeneticAlgorithmWeights;
 import NNetworks.DoubleEvolutionNetwork.NPCNetwork;
 import NNetworks.DoubleEvolutionNetwork.NPCNetworkBreeder;
 import NNetworks.DoubleEvolutionNetwork.NPCNetworkBreederPararelInit;
+import NNetworks.NeuronBetter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,26 +41,32 @@ public class MainWindow {
     private JButton testujButton;
     private JButton przerwijTestyButton;
     private JButton nextGenerationButton;
-    private NPCNetworkBreeder breeder;
+    //private NPCNetworkBreeder breeder;
+    private GeneticAlgorithmWeights breeder2;
     private MainWindow myself;
-    private ProgressLabel progressu;
+    public ProgressLabel progressu;
     public JFrame parento;
     private NPCNetwork choosen;
+    private NPCNetwork scheme;
     public Boolean przerwijFlag;
     private int SIRange;
 
+    public boolean koniecTest;
+    public boolean koniecPetli;
+
     public void SetBreederInfo()
     {
-        breederSize.setText(String.valueOf(breeder.getNetworksCount()));
-        breederAttackFormat.setText(String.valueOf(breeder.GetAttackFormat()));
-        breederMovementFormat.setText(String.valueOf(breeder.GetMovementFormat()));
-        breederInt.setText(String.valueOf(breeder.getRandTestNum()));
+        breederSize.setText(String.valueOf(breeder2.getPopulation().length));
+        breederAttackFormat.setText(String.valueOf(breeder2.pattern.attack.layersScheme));
+        breederMovementFormat.setText(String.valueOf(breeder2.pattern.movement.layersScheme));
+        //breederInt.setText(String.valueOf(breeder.getRandTestNum()));
     }
 
     public MainWindow()
     {
         progressu = new ProgressLabel();
         przerwijFlag = true;
+        koniecTest = true;
         myself = this;
         ActionListener fajny = new ActionListener() {
             @Override
@@ -91,16 +99,17 @@ public class MainWindow {
                 }
                 else if(e.getSource()==testujButton)
                 {
-                    TestujButton();
+                    ZapetlonyTestButton();
+                    //TestujButton();
                 }
                 else if(e.getSource()==przerwijTestyButton)
                 {
-                    LosujAżDobre();
+                    koniecPetli = true;
                 }
                 else if(e.getSource()==nextGenerationButton)
                 {
-                    breeder.championsToPreserveNumber = Integer.parseInt(textField3.getText());
-                    breeder.NextGeneration();
+                    //breeder.championsToPreserveNumber = Integer.parseInt(textField3.getText());
+                    NextGenerationButton();
                 }
             }
         };
@@ -116,6 +125,7 @@ public class MainWindow {
         nextGenerationButton.addActionListener(fajny);
     }
 
+    /*
     public void LosujAżDobre()
     {
         Boolean przestan=false;
@@ -139,32 +149,53 @@ public class MainWindow {
         }
 
     }
+    */
 
     public void SortBreeder()
     {
-        breeder.SortByGrades();
+        breeder2.SortByGrades();
+    }
+
+    public void NextGenerationButton()
+    {
+        breeder2.setPopulation(breeder2.getNextGen().NewGeneration(breeder2.getPopulation(),breeder2.getMixer()));
+        breeder2.MutateAll(breeder2.mutationChance);
     }
 
     public void UstawButton()
     {
-        choosen = breeder.GetNPCNetwork(Integer.parseInt(textField1.getText()));
+        choosen = scheme;
+        scheme.SetGenes(breeder2.getPopulation()[(Integer.parseInt(textField1.getText()))].GetGenes());
     }
     public void WyswietlButton()
     {
-        networkGrade.setText(String.valueOf(breeder.GetNPCNetwork(Integer.parseInt(textField1.getText())).getGrade()));
-        networkGames.setText(String.valueOf(breeder.GetNPCNetwork(Integer.parseInt(textField1.getText())).getGradesDone()));
+        networkGrade.setText(String.valueOf(breeder2.getPopulation()[Integer.parseInt(textField1.getText())].GetGrades()));
+        //networkGames.setText(String.valueOf(breeder.GetNPCNetwork(Integer.parseInt(textField1.getText())).getGradesDone()));
+    }
+    public double GetBestGrade()
+    {
+        return breeder2.getPopulation()[0].GetGrades();
+    }
+    public void ZapetlonyTestButton()
+    {
+        koniecTest = false;
+        koniecPetli = false;
+        Thread odpal = new Thread(new MainWindowTestItLoop(this));
+        odpal.start();
     }
     public void TestujButton()
     {
         przerwijFlag = false;
+        koniecTest = false;
+        koniecPetli = false;
+        /*
 
         ExecutorService executor = Executors.newFixedThreadPool(8);
+        */
 
-        int sumaToPlay = 0;
-        for(int i=0;i<breeder.getNetworksCount();i++) sumaToPlay-=breeder.GetNPCNetwork(i).getGradesDone();
-        sumaToPlay += (breeder.getNetworksCount() * Integer.valueOf(textField2.getText()));
-
-        progressu.SetNewProgress(sumaToPlay);
+        progressu.SetNewProgress(Integer.valueOf(textField2.getText())*breeder2.getPopulation().length);
+/*
+        long k = System.nanoTime();
 
         for (int i = 0; i < breeder.getNetworksCount(); i++) {
             ATrainSIGame initer = new ATrainSIGame();
@@ -178,6 +209,13 @@ public class MainWindow {
 
         }
         executor.shutdown();
+
+        while (!executor.isTerminated()) {}
+
+        */
+
+        breeder2.getTester().TestMultiple(breeder2.getPopulation(),Integer.valueOf(textField2.getText()));
+
     }
 
     public void CreateBreederFromForm(String networkNum,String networkAttackFormat,String networkMovementFormat)
@@ -195,14 +233,25 @@ public class MainWindow {
             movementPattern[i] = Integer.parseInt(movementArray[i]);
         }
         SIRange = attackPattern[0];
-        movementPattern[0] = ((attackPattern[0]*2+1)*(attackPattern[0]*2+1)*3+3);
-        attackPattern[0] = ((attackPattern[0]*2+1)*(attackPattern[0]*2+1)*3+3);
+        //movementPattern[0] = ((attackPattern[0]*2+1)*(attackPattern[0]*2+1)*3+3);
+        //attackPattern[0] = ((attackPattern[0]*2+1)*(attackPattern[0]*2+1)*3+3);
         int networksNum = Integer.parseInt(networkNum);
-        breeder = new NPCNetworkBreeder();
-        breeder.EmptyInit(networksNum);
+
+        ///// START 1
+
+        //long k = System.nanoTime();
+
+        //breeder = new NPCNetworkBreeder();
+        //breeder.EmptyInit(networksNum);
 
         przerwijFlag = false;
 
+        NPCNetwork temp = new NPCNetwork(new NeuronBetter());
+        temp.movement.Init(movementPattern);
+        temp.attack.Init(attackPattern);
+
+        scheme = temp;
+        /*
         ExecutorService executor = Executors.newFixedThreadPool(8);
 
         progressu.SetNewProgress(networksNum);
@@ -218,6 +267,22 @@ public class MainWindow {
             executor.execute(initer);
         }
         executor.shutdown();
+
+        while (!executor.isTerminated()) {}
+        */
+        //System.out.println((double)(System.nanoTime()-k)/1000000000);
+
+        ///// STOP 1
+
+        ///// START 2
+        //k = System.nanoTime();
+
+        breeder2 = new GeneticAlgorithmWeights(temp,this,progressu,networksNum,SIRange);
+        SetBreederInfo();
+        //breeder2.CreateFreshPopulation(breeder.GetNPCNetwork(0),networksNum);
+
+        ///// STOP 2
+        //System.out.println((double)(System.nanoTime()-k)/1000000000);
 
     }
 
@@ -254,7 +319,15 @@ public class MainWindow {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 //This is where a real application would open the file.
-                breeder = NPCNetworkBreeder.OpenFromFile( file.getAbsolutePath() );
+                //long k = System.nanoTime();
+                //breeder = NPCNetworkBreeder.OpenFromFile( file.getAbsolutePath() );
+                //System.out.println((double)(System.nanoTime()-k)/1000000000);
+
+                //k = System.nanoTime();
+                breeder2 = GeneticAlgorithmWeights.OpenFromFile( file.getAbsolutePath() +"2",this,progressu);
+                scheme = breeder2.pattern;
+                //System.out.println((double)(System.nanoTime()-k)/1000000000);
+
                 SetBreederInfo();
             }
 
@@ -268,7 +341,14 @@ public class MainWindow {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             //This is where a real application would open the file.
-            breeder.SaveToFile( file.getAbsolutePath() );
+            //long k = System.nanoTime();
+            //breeder.SaveToFile( file.getAbsolutePath() );
+            //System.out.println((double)(System.nanoTime()-k)/1000000000);
+
+            //k = System.nanoTime();
+            breeder2.SaveToFile( file.getAbsolutePath() +"2");
+            //System.out.println((double)(System.nanoTime()-k)/1000000000);
+
             SetBreederInfo();
         }
     }

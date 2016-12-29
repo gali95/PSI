@@ -21,7 +21,7 @@ public class AGraphicFiles {
             materials[1] = ImageIO.read(new File("claws.png"));
             materials[2] = ImageIO.read(new File("fireball.png"));
             materials[3] = ImageIO.read(new File("player.png"));
-            materials[4] = ImageIO.read(new File("player.png"));
+            materials[4] = ImageIO.read(new File("enemy.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

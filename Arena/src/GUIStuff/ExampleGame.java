@@ -135,7 +135,6 @@ public class ExampleGame implements Runnable {
 
     public ExampleGame(String first, String second, NPCNetwork choosen,int choosenRange)
     {
-        System.out.println("KURWA!");
         tempLoc = new AGame(first,second,choosen,choosenRange);
 
         ActionListener act = new ActionListener() {

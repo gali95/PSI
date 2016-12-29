@@ -31,7 +31,6 @@ public class AAOEAttack extends AObject{
     }
     public void MyRoutine(double dTime)
     {
-        //System.out.println("To sie kurwa odpala");
         remainingTime -= dTime;
         if(remainingTime <= 0)
         {

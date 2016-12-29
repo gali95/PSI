@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.TreeSet;
 
 /**
  * Created by Lach on 2016-12-03.
@@ -18,6 +19,7 @@ public class NPCNetworkBreeder extends NetworkEvolution implements Serializable{
     protected NPCNetwork[] networks;
     protected int weightsAttackCount,weightsMovementCount;
     int randTestNum;
+    int[] nerPerAttack,nerPerMovement;
 
     public String GetAttackFormat()
     {
@@ -57,6 +59,8 @@ public class NPCNetworkBreeder extends NetworkEvolution implements Serializable{
     }
     public void Init(int[] neuronPerAttackLayer,int[] neuronPerMovementLayer, int networks_n)
     {
+        nerPerAttack = neuronPerAttackLayer;
+        nerPerMovement = neuronPerMovementLayer;
         networks = new NPCNetwork[networks_n];
         for(int i=0;i<networks_n;i++)
         {
@@ -149,6 +153,30 @@ public class NPCNetworkBreeder extends NetworkEvolution implements Serializable{
         return ret;
 
     }
+    protected double[] getWeights(NPCNetwork choosen,NPCNetworkType choice) {
+
+        double[] ret = new double[weightsAttackCount];
+        int counter = 0;
+
+        NeuronNetwork l;
+        if(choice==NPCNetworkType.attack)
+            l = choosen.attack;
+        else
+            l = choosen.movement;
+
+        for(int i=0;i<l.GetLayerNumber();i++)
+        {
+            for(int j=0;j<l.AccessLayer(i).GetNeuronNumber();j++)
+            {
+                for(int k=0;k<l.AccessLayer(i).AccessNeuron(j).GetEntriesSize();k++)
+                {
+                    ret[counter++] = l.AccessLayer(i).AccessNeuron(j).AccessEntry(k).getWeight();
+                }
+            }
+        }
+        return ret;
+
+    }
     protected void setWeights(int networkIndex, double[] weights,NPCNetworkType choice)
     {
         if(weights.length != weightsCount) return;
@@ -159,6 +187,29 @@ public class NPCNetworkBreeder extends NetworkEvolution implements Serializable{
             l = networks[networkIndex].attack;
         else
             l = networks[networkIndex].movement;
+
+
+        for(int i=0;i<l.GetLayerNumber();i++)
+        {
+            for(int j=0;j<l.AccessLayer(i).GetNeuronNumber();j++)
+            {
+                for(int k=0;k<l.AccessLayer(i).AccessNeuron(j).GetEntriesSize();k++)
+                {
+                    l.AccessLayer(i).AccessNeuron(j).AccessEntry(k).setWeight(weights[counter++]);
+                }
+            }
+        }
+    }
+    protected void setWeights(NPCNetwork choosen, double[] weights,NPCNetworkType choice)
+    {
+        if(weights.length != weightsCount) return;
+        int counter = 0;
+
+        NeuronNetwork l;
+        if(choice==NPCNetworkType.attack)
+            l = choosen.attack;
+        else
+            l = choosen.movement;
 
 
         for(int i=0;i<l.GetLayerNumber();i++)
@@ -238,6 +289,59 @@ public class NPCNetworkBreeder extends NetworkEvolution implements Serializable{
 
         ResetGrades();
     }
+    public void NextGeneration2()
+    {
+        double range=0;
+        for(int i=0;i<networks.length;i++)
+        {
+            double tymcz = networks[i].getGrade();
+            networks[i].setGrade(range);
+            range += tymcz;
+        }
+        TreeSet<NPCNetwork> chances = new TreeSet<NPCNetwork>(new Comparator<NPCNetwork>() {
+            public int compare(NPCNetwork o1, NPCNetwork o2) {
+                return o2.compareTo(o1);
+            }
+        });
+
+        for(int i=0;i<networks.length;i++) {
+
+            chances.add(networks[i]);
+        }
+
+        NPCNetwork[] choosen = new NPCNetwork[networks.length];
+        Random rand = new Random();
+        NPCNetwork randomPurposeOnly = new NPCNetwork(new NeuronBetter());
+
+        for(int i=0;i<networks.length;i++) {
+            randomPurposeOnly.setGrade(rand.nextDouble()%range);
+            choosen[i] = chances.floor(randomPurposeOnly);
+        }
+
+        double[][][] newGrades = new double[networks.length][][];
+
+        for(int i=0;i<networks.length;i+=2)
+        {
+            newGrades[i] = new double[2][];
+            newGrades[i][0] = mixWeights(getWeights(choosen[i],NPCNetworkType.attack),getWeights(choosen[i+1],NPCNetworkType.attack));
+            newGrades[i][1] = mixWeights(getWeights(choosen[i],NPCNetworkType.movement),getWeights(choosen[i+1],NPCNetworkType.movement));
+            newGrades[i+1] = new double[2][];
+            newGrades[i+1][0] = mixWeights(getWeights(choosen[i],NPCNetworkType.attack),getWeights(choosen[i+1],NPCNetworkType.attack));
+            newGrades[i+1][1] = mixWeights(getWeights(choosen[i],NPCNetworkType.movement),getWeights(choosen[i+1],NPCNetworkType.movement));
+        }
+
+        for(int i=0;i<networks.length;i++)
+        {
+
+            setWeights(i,newGrades[i][0],NPCNetworkType.attack);
+            setWeights(i,newGrades[i][1],NPCNetworkType.movement);
+
+        }
+
+        ResetGrades();
+        //        dodaj mutacje
+    }
+
 
     public void SaveToFile(String filePath)
     {

@@ -1,13 +1,19 @@
 package AActualGame;
 
+import AverTimeMeasure.TempClass;
 import GUIStuff.MainWindow;
 import GUIStuff.ProgressLabel;
+import GeneticAlghorithm.basicClassesInterfaces.Geneable;
+import GeneticAlghorithm.defaultImplementations.AGameSi.OnlyWeights.NeuronNetworkWeights;
 import Interfaces.AHeritage;
 import Matho.Vector2;
 import NNetworks.DoubleEvolutionNetwork.NPCNetwork;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Lach on 2016-12-03.
@@ -25,6 +31,8 @@ public class ATrainSIGame extends AGame implements Runnable{
     public ProgressLabel progressu;
     public MainWindow fata;
     public Boolean thatWasLast;
+    private Geneable selected;
+    public boolean weightsOnly;
 
     public AHeritage CreateH1()
     {
@@ -51,6 +59,22 @@ public class ATrainSIGame extends AGame implements Runnable{
         this.roundTick = roundTick;
         CreateMyMap();
         initialized = true;
+        weightsOnly = false;
+    }
+    public void InitGame(NPCNetwork[] sources, Geneable weights,int sourceRange, int mapSizeX, int mapSizeY, int gamesToPlay, double roundTime, double roundTick, int threadsNum)
+    {
+        this.source = sources[(int)(Thread.currentThread().getId()%threadsNum)];
+        source.SetGenes(weights.GetGenes());
+        selected = weights;
+        this.sourceRange = sourceRange;
+        this.mapSizeX = mapSizeX;
+        this.mapSizeY = mapSizeY;
+        this.gamesToPlay = gamesToPlay;
+        this.gameStartTime = roundTime;
+        this.roundTick = roundTick;
+        CreateMyMap();
+        initialized = true;
+        weightsOnly = true;
     }
     private void CreateMyMap()
     {
@@ -89,11 +113,14 @@ public class ATrainSIGame extends AGame implements Runnable{
         }
         ret.setSi(source);
         ret.setRange(sourceRange);
+        if(weightsOnly) ret.thingToGrade = selected;
         return ret;
     }
 
     public double CountResultFor(ACharacter target)
     {
+        double results = 0;
+        /*
         ACharacter asked,other;
         if(target==spawnedFirst)
         {
@@ -106,14 +133,14 @@ public class ATrainSIGame extends AGame implements Runnable{
             other = spawnedFirst;
         }
 
-        double results = 0;
         results += asked.HP;
-        results += ((other.HP - 100) * -1);
+        results += ((other.HP - 100) * -1)*1;
         if(other.HP <= 0)
         {
-            results += 300;
-            results += GetRemainingTime() * 100;
+            results += 300*3;
+            results += GetRemainingTime() * 300;
         }
+        */
         return results;
     }
 
@@ -172,11 +199,20 @@ public class ATrainSIGame extends AGame implements Runnable{
         spawnedFirst.location.GarbageRoutine();
 
 
+        if(!weightsOnly) {
+            h1.GameEnded(CountResultFor(spawnedFirst));
+            h2.GameEnded(CountResultFor(spawnedSecond));
+        }
+        else
+        {
+            selected.SetGrades(selected.GetGrades()+CountResultFor(spawnedFirst));
+        }
 
-        h1.GameEnded(CountResultFor(spawnedFirst));
-        h2.GameEnded(CountResultFor(spawnedSecond));
+        if( progressu.Increase())
+        {
+            fata.przerwijFlag=false;
 
-        if( progressu.Increase()) fata.przerwijFlag=false;
+        }
 
         spawnedFirst = null;
         spawnedSecond = null;
@@ -198,7 +234,18 @@ public class ATrainSIGame extends AGame implements Runnable{
         if(thatWasLast)
         {
             fata.SortBreeder();
+            fata.koniecTest = true;
         }
 
+    }
+
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(8);
+        for(int i=0;i<1000;i++)
+        {
+            TempClass fajn = new TempClass();
+            executor.execute(fajn);
+        }
+        executor.shutdown();
     }
 }
