@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * Created by Lach on 2016-12-25.
  */
-public class SinglePointMixer implements GeneMixer {
+public class SinglePointMixer implements GeneMixer {   // utworzenie nowego genotypu, poprzez przedzielenie genotypow rodzicow w indeksie losowym i na podstawie wymieszania tych dwoch nierownych polowek, tak zeby uzyskac genotyp o orginalnej wielkosci
     @Override
     public Object[] ActualMixing(Geneable g1, Geneable g2) {
         return ActualMixing(g1,g2,true);

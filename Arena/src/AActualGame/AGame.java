@@ -1,10 +1,12 @@
 package AActualGame;
 
+import GeneticAlghorithm.basicClassesInterfaces.Geneable;
 import Interfaces.AHeritage;
 import Matho.Vector2;
 import NNetworks.DoubleEvolutionNetwork.NPCNetwork;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by Lach on 2016-11-12.
@@ -23,6 +25,7 @@ public class AGame {
     public String enemy1,enemy2;
     public NPCNetwork choosen;
     public int choosenRange;
+    public Geneable targeto;
 
     public AGame()
     {
@@ -33,6 +36,17 @@ public class AGame {
         gameStartTime = 60;
         repeatGame = true;
         wipeAll = false;
+    }
+
+    private void RandomizeSpawns()
+    {
+        Random rand = new Random();
+        spawnPlace1.x = 3;//rand.nextInt(10);
+        spawnPlace1.y = 3;//rand.nextInt(10);
+        spawnPlace2.x = 6;//rand.nextInt(10);
+        spawnPlace2.y = 6;//rand.nextInt(10);
+        while((int)spawnPlace1.y == (int)spawnPlace2.y)spawnPlace2.y = rand.nextInt(10);
+
     }
 
     public AGame(String enemy1, String enemy2, NPCNetwork choosen,int choosenRange)
@@ -138,6 +152,7 @@ public class AGame {
         }
         ret.setRange(choosenRange);
         ret.setSi(choosen);
+        ret.pokaz = true;
         return ret;
     }
 
@@ -146,7 +161,7 @@ public class AGame {
 
         if(roundStarted) return;
 
-
+        RandomizeSpawns();
 
         spawnedFirst = CreateFirst();
         spawnedFirst.jury = this;

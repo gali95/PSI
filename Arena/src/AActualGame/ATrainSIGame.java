@@ -85,10 +85,10 @@ public class ATrainSIGame extends AGame implements Runnable{
     private void RandomizeSpawns()
     {
         Random rand = new Random();
-        spawnPlace1.x = rand.nextInt(mapSizeX);
-        spawnPlace1.y = rand.nextInt(mapSizeY);
-        spawnPlace2.x = rand.nextInt(mapSizeX);
-        spawnPlace2.y = rand.nextInt(mapSizeY);
+        spawnPlace1.x = 3;//rand.nextInt(10);
+        spawnPlace1.y = 3;//rand.nextInt(10);
+        spawnPlace2.x = 6;//rand.nextInt(10);
+        spawnPlace2.y = 6;//rand.nextInt(10);
         while((int)spawnPlace1.y == (int)spawnPlace2.y)spawnPlace2.y = rand.nextInt(mapSizeY);
 
     }
@@ -119,6 +119,7 @@ public class ATrainSIGame extends AGame implements Runnable{
 
     public double CountResultFor(ACharacter target)
     {
+
         double results = 0;
         /*
         ACharacter asked,other;
@@ -134,14 +135,14 @@ public class ATrainSIGame extends AGame implements Runnable{
         }
 
         results += asked.HP;
-        results += ((other.HP - 100) * -1)*1;
+        results += ((other.HP - 100) * -1);
         if(other.HP <= 0)
-        {
-            results += 300*3;
+        {    results += 300*3;
             results += GetRemainingTime() * 300;
         }
         */
         return results;
+
     }
 
     public void StartGame()

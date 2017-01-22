@@ -11,11 +11,11 @@ import java.io.IOException;
 public class AObject {
 
     BufferedImage img;
-    AMap location;
-    int positionX,positionY;
-    ADetailedObjectMovement physics;
+    public AMap location;
+    public int positionX,positionY;
+    public ADetailedObjectMovement physics;
     Boolean garbageDay;
-    Boolean density;
+    public Boolean density;
 
     public AObject(String imgPath) throws IOException {
         physics = new ADetailedObjectMovement();

@@ -1,0 +1,14 @@
+Dokumentacja programu zosta³a sporz¹dzona w formie komentarzów znajduj¹cych siê bezpoœrednio w kodzie, w wiêkszoœci sytuacji w linijkach deklaracji funkcji lub deklaracji klas w celu ³atwiejszego odnalezienia
+
+Ze wzglêdu na zalecenia ¿eby skupiæ siê tylko na czêœci zwi¹zanej z projektem (Sztuczna inteligencja) procesowi udokumentowania zosta³ poddany tylko fragment projektu z nim powi¹zany.
+
+Owa dokumentacja znajduje siê w wymienionych poni¿ej plikach Ÿród³owych (znajdujacych siê w folderze Arena/src):
+-Wszystkie pliki znajduj¹ce siê w paczce GeneticAlghorithm.basicClassesInterfaces
+-Wszystkie pliki znajduj¹ce siê w paczce GeneticAlghorithm.defaultImplementations.AGameSi (poza paczk¹ o nazwie "OnlyWeights")
+-Czêœc plików w paczce AActualGame.ALabirynth
+	-ACheckPoint.java
+	-ACheese.java
+	-AGame.java
+	-AMarkSeeder.java
+	-ASIMouse.java
+	-ASimpleMoue.java

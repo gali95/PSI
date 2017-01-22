@@ -14,8 +14,8 @@ public class CreateNewBreederForm implements Runnable{
     private JButton OKButton;
     private JButton ANULUJButton;
     private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    //private JTextField textField2;
+    //private JTextField textField3;
     private JPanel nazw;
     private MainWindow source;
     private JFrame fata;
@@ -27,7 +27,7 @@ public class CreateNewBreederForm implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==OKButton)
                 {
-                    source.CreateBreederFromForm(textField1.getText(),textField3.getText(),textField2.getText());
+                    source.CreateBreederFromForm(textField1.getText());//,textField3.getText(),textField2.getText());
                 }
                 else
                 {

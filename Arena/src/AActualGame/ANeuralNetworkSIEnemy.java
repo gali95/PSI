@@ -19,6 +19,8 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
     private double thingToGradeParam;
     private double thingToGradeStartTime;
     private double thingToGradeActualTime;
+    public boolean pokaz;
+    public double start;
 
     public ANeuralNetworkSIEnemy() throws IOException {
         super(4);
@@ -27,6 +29,8 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
         thingToGradeParam = 2;
         thingToGradeStartTime = 1;
         thingToGradeActualTime = thingToGradeStartTime;
+        pokaz = false;
+        start = 0;
     }
 
     public void setRange(int nRange)
@@ -100,7 +104,7 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
     }
     public double[] getShorterEntry()
     {
-        double[] ret = new double[15];
+        double[] ret = new double[10];
         double[] partRet = location.getFireballsData();
         double paramIt = 10;
         for(int i=0;i<partRet.length;i++) ret[i] = partRet[i];
@@ -113,13 +117,13 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
         }
         ret[6] = (enemy.positionX - positionX) / paramIt;
         ret[7] = (enemy.positionY - positionY) / paramIt;
-        ret[8] = positionX/ paramIt;
-        ret[9] = positionY/ paramIt;
-        ret[10] = (location.GetSizeX() - positionX)/ paramIt;
-        ret[11] = (location.GetSizeY() - positionY)/ paramIt;
-        ret[12] = (double)HP/100;
-        ret[13] = (double)enemy.HP/100;
-        ret[14] = jury.GetRemainingTime();
+        //ret[8] = positionX/ paramIt;
+        //ret[9] = positionY/ paramIt;
+        ret[8] = (location.GetSizeX() - positionX)/ paramIt;
+        ret[9] = (location.GetSizeY() - positionY)/ paramIt;
+        //ret[12] = (double)HP/100;
+        //ret[13] = (double)enemy.HP/100;
+        //ret[14] = jury.GetRemainingTime();
 
         return ret;
     }
@@ -128,17 +132,18 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
         super.MyRoutine(dTime);
         if(location == null || enemy==null) return;
 
-
+        /*
         if(thingToGrade != null) {
             thingToGradeActualTime -= dTime;
             if (thingToGradeActualTime <= 0) {
                 thingToGradeActualTime = thingToGradeStartTime;
                 double distance = Math2D.CountDistance(positionX,positionY,enemy.positionX,enemy.positionY);
-                if(distance<3) distance = (3-distance)*4;
+                if(distance<9) distance = (9-distance)* (9-distance);
                 else distance = 0;
                 thingToGrade.SetGrades(thingToGrade.GetGrades() + (thingToGradeParam*distance));
             }
         }
+        */
 
 
         if(attackRemainingCooldown <= 0 || moveRemainingCooldown <= 0)
@@ -150,7 +155,7 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
                 int highest=0;
                 for(int i=1;i<attackChoice.length;i++)
                 {
-                    if(attackChoice[i]>attackChoice[highest]) highest = i;
+                    if(attackChoice[i]<attackChoice[highest]) highest = i;
                 }
                 int x=0,y=0;
                 switch (highest)
@@ -184,7 +189,7 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
                 int highest=0;
                 for(int i=1;i<moveChoice.length;i++)
                 {
-                    if(moveChoice[i]>moveChoice[highest]) highest = i;
+                    if(moveChoice[i]<moveChoice[highest]) highest = i;
                 }
                 int x=0,y=0;
                 switch (highest)
@@ -210,13 +215,26 @@ public class ANeuralNetworkSIEnemy extends ACharacter{
                         y=-1;
                         break;
                 }
-                StepIntoDirection(x,y);
-                /*
+
                 if(thingToGrade!=null) {
                     double distChange = Math2D.CountDistance(positionX, positionY, enemy.positionX, enemy.positionY) - Math2D.CountDistance((positionX + x), (positionY + y), enemy.positionX, enemy.positionY);
-                    if (distChange > 0) thingToGrade.SetGrades(thingToGrade.GetGrades() + distChange);
-                }*/
+                    thingToGrade.SetGrades(thingToGrade.GetGrades() + distChange);
+
+                }
+
+                if(pokaz)
+                {
+                    double distChange = Math2D.CountDistance(positionX, positionY, enemy.positionX, enemy.positionY) - Math2D.CountDistance((positionX + x), (positionY + y), enemy.positionX, enemy.positionY);
+                    start += distChange;
+                    System.out.println(start);
+                }
+
+                StepIntoDirection(x,y);
+
+
+
             }
+
         }
     }
 

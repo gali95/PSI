@@ -3,7 +3,7 @@ package GeneticAlghorithm.basicClassesInterfaces;
 /**
  * Created by Lach on 2016-12-25.
  */
-public class GeneticAlgorithm {
+public class GeneticAlgorithm {  // klasa główna zarządzająca całym algorytmem, wykorzystująca inne interfejsy i decydująca o tym jakiego środowiska testowego, lub jakiego sposobu selekcji użyć
 
     private Geneable[] population;
     private GeneMixer mixer;
@@ -60,7 +60,7 @@ public class GeneticAlgorithm {
         this.nextGen = nextGen;
     }
 
-    public void MutateAll(double chance)
+    public void MutateAll(double chance)  // funkcja odpalająca mutacje na każdym osobniku zawierającym się w tablicy "population"
     {
         Geneable[] pop = getPopulation();
         for(int i=0;i< pop.length;i++)
@@ -69,7 +69,7 @@ public class GeneticAlgorithm {
         }
     }
 
-    public void ResetGrades()
+    public void ResetGrades()  // ustawienie ocen wszystkich osobników w "population" na 0
     {
         if(population == null) return;
 

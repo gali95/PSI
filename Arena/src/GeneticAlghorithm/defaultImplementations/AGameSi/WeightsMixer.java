@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * Created by Lach on 2016-12-25.
  */
-public class WeightsMixer implements GeneMixer{
+public class WeightsMixer implements GeneMixer{  // implementacja TwoSidedWeightsMixer, uproszczona, bez możliwości zastosowania dwóch wariantów
 
 
     @Override

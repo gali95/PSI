@@ -5,6 +5,7 @@ import GUIStuff.ProgressLabel;
 import GeneticAlghorithm.basicClassesInterfaces.Geneable;
 import GeneticAlghorithm.basicClassesInterfaces.GeneticAlgorithm;
 import GeneticAlghorithm.defaultImplementations.AGameSi.RouleteNextGeneration;
+import GeneticAlghorithm.defaultImplementations.AGameSi.TwoSidedWeightsMixer;
 import GeneticAlghorithm.defaultImplementations.AGameSi.WeightsMixer;
 import NNetworks.DoubleEvolutionNetwork.NPCNetwork;
 
@@ -30,7 +31,7 @@ public class GeneticAlgorithmWeights extends GeneticAlgorithm {
         this.fata = fata;
         this.pattern = pattern;
         setGeneRand(new WeghtsRandomizer());
-        setMixer(new WeightsMixer());
+        setMixer(new TwoSidedWeightsMixer());
         setNextGen(new RouleteNextGeneration());
         setTester(new WeightsTester(pattern,fata,progressu,SIRange));
         CreateFreshPopulation(pattern,size);

@@ -23,6 +23,7 @@ public class ProgressLabel {
     {
         actual++;
         UpdateLabel();
+        //System.out.println("testy: "+actual+"/"+max);
         return actual == max;
     }
     public void UpdateLabel()

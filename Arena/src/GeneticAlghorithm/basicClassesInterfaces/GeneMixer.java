@@ -14,7 +14,7 @@ public interface GeneMixer {
         else
             return null;
     }
-    public Object[] ActualMixing(Geneable g1,Geneable g2);  // here actual mixing should happen
+    public Object[] ActualMixing(Geneable g1,Geneable g2);  // utworzenie nowego genotypu, mieszajac dwa podane w argumentach // here actual mixing should happen
     public default Geneable CreateChild(Geneable g1, Geneable g2)
     {
         Object[] mixed = MixGenes(g1,g2);
@@ -40,7 +40,7 @@ public interface GeneMixer {
         else
             return null;
     }
-    public default Object[] ActualMixing(Geneable g1, Geneable g2, boolean side)         // overload to change output depending on "side" value
+    public default Object[] ActualMixing(Geneable g1, Geneable g2, boolean side) // alternatywa mieszania, ktora uwzglednia ze geny mozna mieszac na dwa sposoby, wartosc zmiennej "side" decyduje o tym ktory wariant wybieramy     // overload to change output depending on "side" value
     {
         return ActualMixing(g1,g2);
     }

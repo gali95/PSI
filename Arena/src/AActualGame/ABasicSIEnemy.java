@@ -11,12 +11,15 @@ public class ABasicSIEnemy extends ACharacter{
 
     public ACharacter Enemy;
     public ANodeAvoider SIHelper;
+    public double waitAfterMoveActual,waitAfterMoveStart;
 
     public ABasicSIEnemy() throws IOException {
         super(4);
         moveSpeed = 10;
 
         distanceToRun = 4;
+        waitAfterMoveStart = 0.5;
+        waitAfterMoveActual = 0;
     }
     public void Destroy()
     {
@@ -25,20 +28,24 @@ public class ABasicSIEnemy extends ACharacter{
 
     public void AttackTarget()
     {
+
         if(Enemy != null)
         {
             if(fireballRemainingCooldown>0) return;
             CastFireball(Enemy.positionX,Enemy.positionY);
         }
+
     }
 
     public double distanceToRun;
     public Boolean MaintainDistance()
     {
         Vector2 besto = SIHelper.bestPath();
+        if(waitAfterMoveActual>0) return false;
         if(besto.x != 0 || besto.y != 0)
         {
             StepIntoDirection((int)besto.x,(int)besto.y);
+            waitAfterMoveActual = waitAfterMoveStart;
             return true;
         }
         return false;
@@ -47,6 +54,10 @@ public class ABasicSIEnemy extends ACharacter{
     public void MyRoutine(double dTime)
     {
         super.MyRoutine(dTime);
+        if(waitAfterMoveActual>0)
+        {
+            waitAfterMoveActual -= dTime;
+        }
         if(SIHelper == null) {
             SIHelper = new ANodeAvoider();
             SIHelper.owner = this;

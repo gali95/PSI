@@ -11,12 +11,12 @@ import java.io.IOException;
 public class ACharacter extends AObject{
     
     int HP;
-    double moveSpeed;
+    public double moveSpeed;
     AGame jury;
     AHeritage watashiwasoru;
     double fireballCooldown,fireballRemainingCooldown;
     double attackCooldown,attackRemainingCooldown;
-    double moveRemainingCooldown;
+    public double moveRemainingCooldown;
     public ACharacter enemy;
     
     public Boolean MoveUpState,MoveDownState,MoveRightState,MoveLeftState,AttackUpState,AttackDownState,AttackRightState,AttackLeftState;

@@ -13,7 +13,7 @@ public class ADetailedObjectMovement {
     double detailedPositionX,detailedPositionY;
     Boolean immobilized;
     double immobilizedTimeLeft;
-    AObject target;
+    public AObject target;
     AObject lockedFollowTarget;
     Vector2 lockedFollowOffset;
 

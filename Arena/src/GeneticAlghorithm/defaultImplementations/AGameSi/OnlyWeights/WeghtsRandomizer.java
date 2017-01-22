@@ -24,7 +24,7 @@ public class WeghtsRandomizer implements GeneRandomizer {
         {
             for(int j=0;j<gen.length;j++)
             {
-                rande[j] = (((double)random.nextInt(1001) / 1000)-0.5)*2;
+                rande[j] = (((double)random.nextInt(10001) / 10000)-0.5)*2;
             }
             population[i].SetGenes(rande);
         }

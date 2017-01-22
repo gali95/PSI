@@ -1,0 +1,105 @@
+domyœlnie program powinno siê uruchamiaæ za pomoc¹ pliku .jar zlokalizowanym w folderze Arena/Executable/Arena.jar (wymagana java 1.8)
+
+instrukcja obs³ugi GUI, programu:
+
+a) stworzenie populacji
+b) przetestowanie populacji w labiryncie
+c) utworzenie nowego pokolenia
+d) automatyzacja kroku b) i c) (powtarzanie ich a¿ do uzyskania zadowalaj¹cego nas wyniku)
+e) przetestowanie danego osobnika, wizualizuj¹c jego przejœcie labiryntu
+f) wyœwietlanie podstawowych danych o osobniku (jego ocena)
+g) zapisanie rezultatów algorytmu do pliku
+h) przykladowe scenariusze uruchomienia programu
+
+
+a) stworzenie populacji
+
+-Klikamy przycisk "New Breeder"
+-w formularzu wpisujemy wielkoœæ populacji
+-potwierdzamy przyciskiem "OK"
+-zamykamy rêcznie okienko czerwonym "X"
+
+Mo¿emy wykonaæ t¹ operacje nawet jeœli ju¿ wczeœniej utworzyliœmy populacje, zostanie ona automatycznie nadpisana
+
+b) przetestowanie populacji w labiryncie
+
+wymagane:
+	-krok a)
+	
+-wpisanie w lewe pole tekstowe (istniej¹ tylko 2, mam nadzieje ¿e taki opis jest wystarczaj¹co czytelny) liczby testów dla ka¿dego osobnika
+-naciœniêcie przycisku "Testuj"
+-wysuniêta najbardziej na prawo etykieta tekstowa informuje nas w czasie rzeczywistym o postêpie testów, do poprawnego dzia³ania reszty funkcji programu, zaleca siê odczekanie na zakoñczenie wszystkich testów
+
+UWAGA: po wykonaniu testow osobniki zostan¹ posortowane w tablicy wedlug oceny w kolejnosci malej¹cej (najlepszy osobnik znajdzie siê na indeksie 0)
+
+c) utworzenie nowego pokolenia
+
+wymagane:
+	-krok a)
+	-poprawnie zakoñczony krok b) (brak jego wykonania mo¿e powodowaæ nieprawid³owoœci w dzia³aniu programu)
+
+-klikamy przycisk "NextGeneration"
+
+d) automatyzacja kroku
+
+wymagane:
+	-krok a)
+
+-w prawej etykiecie wpisujemy po¿¹dan¹ przez nas ocenê osobnika do której d¹¿ymy (przy domyslnym algorytmie ocena ta od najgorszej do najlepszej to 0.0 do 7.0)
+-klikamy przycisk "TestujDo"
+
+UWAGA: procedura ta nie zosta³a utworzona z myœl¹ o czytelnym wyœwietlaniu postêpów procesu, jej uruchomienie ZAWIESZA ca³y interfejs a¿ do (co nie jest gwarantowane) znalezienia osobnika którego poszukujemy
+W prostym skrócie procedura ta automatycznie uruchamia na zmiane krok b) i c) a¿ do uzyskania minimalnego wymaganego rezultatu
+
+
+e) przetestowanie populacji w labiryncie
+
+wymagane:
+	-krok a)
+	-wybranie danego osobnika:
+		-w prawym polu tekstowym wpisujemy indeks osobnika (zaczynajac od 0)
+		-klikamy przycisk "ustaw"
+
+-aby przetestowaæ wybranego osobnika, klikamy przycisk "Gra Testowa", wyœwietli siê nam okienko z zapêtlon¹ symulacj¹
+UWAGA: zamkniecie okienka symulacji zamyka ca³¹ aplikacje, aby zrobiæ to poprawnie nale¿y u¿yæ znajduj¹cego siê w lewym dolnym rogu przycisku "Button"
+
+f) wyœwietlanie podstawowych danych o osobniku (jego ocena)
+
+wymagane:
+	-krok a)
+
+-wpisanie w prawym polu tekstowym indeksu interesujacego nas osobnika (numeracja od 0)
+-klikniêcie przycisku "wyswietl"
+
+krok ten sprawi ¿e etykieta pod przyciskiem o nazwie "wynik" poda jak¹ ocenê posiada wybrany przez nas osobnik
+
+g) zapisanie rezultatów algorytmu do pliku
+
+UWAGA: funkcja ta dzia³a poprawnie tylko przy stosowaniu siê do konkretnych parametrów przeprowadzania algorytmu, które to s¹ opisane w nastêpnym kroku
+
+wymagane:
+	-krok a)
+
+-klikamy przycisk "Save results"
+-wybieramy lokacje i nazwe naszego pliku
+-zawiera on x-lini (x to numer pokoleñ) posiadajacych format:
+	- <numer lini>;<ilosc osobnikow z ocena 0.0>,<ilosc osobnikow z ocena 1.0>,(...),<ilosc osobnikow z ocena 7.0>,
+
+h) przykladowe scenariusze uruchomienia programu
+
+tryb manualny:
+
+-krok a) (sugerowana liczba osobnikow 1000 - 10 000)
+-powtarzanie krokow b) (z parametrem 1) i c) a¿ do uzyskania zadowalajacych nas rezultatów (ktore mozna sprawdzic stosujac krok f) na osobniku o indeksie 0, po ka¿dym ukonczonym kroku b) )
+
+-w celu zobaczenia przykladowego osobnika w akcji, wybieramy go po wykonaniu dowolnego kroku b), wykonujac krok e)
+-w celu zapisania rezultatow algorytmu, uzywamy kroku g)
+
+tryp zautomatyzowany:
+
+-krok a) (sugerowana liczba osobnikow 1000 - 10 000)
+-krok d) (sugerowany parametr 7)
+-cierpliwe odczekanie az program zakonczy prace i siê "odwiesi"
+
+-w celu zobaczenia przykladowego osobnika w akcji, wybieramy go po wykonaniu dowolnego kroku b), wykonujac krok e)
+-w celu zapisania rezultatow algorytmu, uzywamy kroku g)

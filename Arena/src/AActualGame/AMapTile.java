@@ -15,7 +15,7 @@ public class AMapTile {
     public BufferedImage turf;
     public List<AObject> content;
     public AMapTile(String imgPath) throws IOException {
-        turf = ImageIO.read(new File(imgPath));
+        turf = AGraphicFiles.materials[0];//ImageIO.read(new File(imgPath));
         content = new LinkedList<AObject>();
     }
     public AMapTile(int imgIndex) throws IOException {
@@ -27,7 +27,7 @@ public class AMapTile {
         for(int i=0;i<content.size();i++)
         {
             initiazer.InteractWith(content.get(i));
-
+            content.get(i).InteractWith(initiazer);
         }
     }
 

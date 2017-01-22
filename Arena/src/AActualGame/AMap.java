@@ -1,5 +1,6 @@
 package AActualGame;
 
+import AActualGame.ALabirynth.AWall;
 import Matho.Vector2;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class AMap {
 
-    AMapTile[][] tiles;
+    public AMapTile[][] tiles;
     List<AObject> allObjects;
     List<AFireBall> fireballs;
     public APlayer player;
@@ -36,6 +37,13 @@ public class AMap {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+    public void InsertWalls(Vector2[] locs)
+    {
+        for(int i=0;i<locs.length;i++)
+        {
+            InsertObject(new AWall(),(int)locs[i].x,(int)locs[i].y);
         }
     }
     public void InitEmpty(int x,int y,int imgIndex)
@@ -127,7 +135,7 @@ public class AMap {
             //System.out.println(allObjects.get(i).physics.detailedPositionY);
         }
         GarbageRoutine();
-        zarzadzacz.MyRoutine(dTime);
+        if(zarzadzacz!=null)zarzadzacz.MyRoutine(dTime);
     }
     public void RemoveAllObjects()
     {

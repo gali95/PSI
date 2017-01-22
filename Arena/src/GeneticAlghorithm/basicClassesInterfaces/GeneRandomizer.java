@@ -5,6 +5,6 @@ package GeneticAlghorithm.basicClassesInterfaces;
  */
 public interface GeneRandomizer {
 
-    public void SetRandomGenes(Geneable[] population);
+    public void SetRandomGenes(Geneable[] population);  // używane do tworzenia losowego genotypu, np. przy tworzeniu pcozątkowej populacji, implementacja jest zależna od danego przypadku
 
 }

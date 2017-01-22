@@ -32,7 +32,7 @@ public class NeuronNetworkWeights implements Geneable, Serializable {
 
     @Override
     public void SetGenes(Object[] genes) {
-        weights = new double[genes.length];
+        //weights = new double[genes.length];
         for(int i=0;i<genes.length;i++) weights[i] = (Double)genes[i];
     }
 
@@ -61,7 +61,7 @@ public class NeuronNetworkWeights implements Geneable, Serializable {
             double randChange = random.nextDouble()%1.0;
             if(randChange<chanceTo)
             {
-                taken[i] = (((double)random.nextInt(1001) / 1000)-0.5)*2;
+                taken[i] = (((double)random.nextInt(10001) / 10000)-0.5)*2;
             }
         }
         SetGenes(taken);

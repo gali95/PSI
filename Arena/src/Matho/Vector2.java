@@ -17,4 +17,9 @@ public class Vector2 {
         this.x = x;
         this.y = y;
     }
+    public void Set(double x,double y)
+    {
+        this.x = x;
+        this.y = y;
+    }
 }
