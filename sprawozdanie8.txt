@@ -1,6 +1,0 @@
-22.01.2017
-
-Planowany ostatni commit
-
-Projekt:
--finalna wersja projektu, wszystkie instrukcje jak i informacja o dokumentacji zawieraj¹ siê w folderze Arena/readme
