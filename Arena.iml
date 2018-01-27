@@ -11,14 +11,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="neuroph-samples-2.92" level="project" />
-    <orderEntry type="library" name="neuroph-core-2.92" level="project" />
-    <orderEntry type="library" name="neuroph-contrib-2.92" level="project" />
-    <orderEntry type="library" name="neuroph-adapters-2.92" level="project" />
-    <orderEntry type="library" name="neuroph-ocr-2.92" level="project" />
-    <orderEntry type="library" name="neuroph-imgrec-2.92" level="project" />
-    <orderEntry type="library" name="slf4j-api-1.7.5" level="project" />
-    <orderEntry type="library" name="slf4j-nop-1.7.6" level="project" />
     <orderEntry type="library" name="forms_rt" level="project" />
   </component>
 </module>
