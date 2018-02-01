@@ -19,6 +19,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,25 +30,23 @@ import java.util.concurrent.TimeUnit;
  * Created by Lach on 2016-12-07.
  */
 public class MainWindow {
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
     private JButton button1;
     private JPanel mainPanel;
     private JLabel breederSize;
     private JButton newBreederButton;
     private JButton saveBreederButton;
-    //private JButton openBreederButton;
-    private JLabel pgLabel;
-    private JTextField textField1;
-    private JButton wyswietlButton;
-    private JButton ustawButton;
     private JTextField textField2;
-    private JLabel networkGrade;
-    private JLabel networkGames;
-    private JButton testujButton;
     private JButton nextGenerationButton;
-    private JButton testujDoButton;
-    //private NPCNetworkBreeder breeder;
+    private JPanel populationPanel;
+    private JPanel listAndDetailsPanel;
+    private JList list1;
+    private JPanel algoActionsPanel;
+    private JLabel statusLabel;
+    private JLabel operationParameterDescription;
+    private JButton button3;
+    private JComboBox comboBox1;
+
+
     public GeneticAlgorithmLabirynth breeder2;
     private MainWindow myself;
     public ProgressLabel progressu;
@@ -108,6 +108,14 @@ public class MainWindow {
         testujButton.addActionListener(fajny);
         nextGenerationButton.addActionListener(fajny);
         testujDoButton.addActionListener(fajny);
+
+        comboBox1.addItemListener(new ItemListener() {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+            }
+        });
     }
 
     public void LabirynthExampleButton() {
@@ -182,15 +190,6 @@ public class MainWindow {
         frame.pack();
         frame.setVisible(true);
         dat.ConnectProgressLabel();
-    }
-
-    private void createUIComponents() {
-        String[] characters = {"Gracz", "ProsteSI", "WybranaSiecSI"};
-
-        comboBox1 = new JComboBox(characters);
-        comboBox2 = new JComboBox(characters);
-
-
     }
 
     public void ConnectProgressLabel() {
