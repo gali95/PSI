@@ -64,19 +64,20 @@ public class CreateNewBreederForm implements Runnable {
      */
     private void $$$setupUI$$$() {
         nazw = new JPanel();
-        nazw.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        nazw.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         OKButton = new JButton();
         OKButton.setText("OK");
-        nazw.add(OKButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        nazw.add(OKButton);
         ANULUJButton = new JButton();
         ANULUJButton.setText("ANULUJ");
-        nazw.add(ANULUJButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        nazw.add(ANULUJButton);
         textField1 = new JTextField();
+        textField1.setPreferredSize(new Dimension(140, 24));
         textField1.setText("");
-        nazw.add(textField1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        nazw.add(textField1);
         final JLabel label1 = new JLabel();
         label1.setText("ilosc genotypow");
-        nazw.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        nazw.add(label1);
     }
 
     /**

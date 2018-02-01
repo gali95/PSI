@@ -1,194 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="6" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUIStuff.MainWindow">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="550" height="400"/>
+      <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="b9fa7" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children/>
-      </grid>
-      <grid id="978fa" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
+      <grid id="b213b" binding="populationPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="East"/>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="58ace" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Aktualne pokolenie"/>
-            </properties>
-          </component>
-          <component id="18ce0" class="javax.swing.JLabel" binding="breederSize">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Label"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <grid id="827fb" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="2" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="71ad5" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="ilosc powtorzen"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <grid id="6276d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="2" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="76fa1" class="javax.swing.JTextField" binding="textField2" default-binding="true">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
+          <grid id="21cb1" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="917fd" class="javax.swing.JLabel" binding="breederSize">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <text value="population size"/>
+                </properties>
+              </component>
+              <grid id="7ff3" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="South"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="a3f" class="javax.swing.JButton" binding="newBreederButton">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="New Population"/>
+                    </properties>
+                  </component>
+                  <component id="1ed05" class="javax.swing.JButton" binding="saveBreederButton">
+                    <constraints border-constraint="South"/>
+                    <properties>
+                      <text value="Save Results"/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
-            </constraints>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="f5d09" binding="listAndDetailsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="9cc28" class="javax.swing.JList" binding="list1" default-binding="true">
+            <constraints border-constraint="Center"/>
             <properties/>
           </component>
+          <component id="14782" class="javax.swing.JLabel">
+            <constraints border-constraint="North"/>
+            <properties>
+              <text value="object details"/>
+            </properties>
+          </component>
+          <component id="aab4d" class="javax.swing.JButton" binding="button1">
+            <constraints border-constraint="South"/>
+            <properties>
+              <text value="Test Game"/>
+            </properties>
+          </component>
         </children>
       </grid>
-      <component id="30a8f" class="javax.swing.JButton" binding="button1" default-binding="true">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Gra Testowa"/>
-        </properties>
-      </component>
-      <component id="b12e1" class="javax.swing.JButton" binding="newBreederButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="New Breeder"/>
-        </properties>
-      </component>
-      <component id="1b3e0" class="javax.swing.JButton" binding="saveBreederButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Save Results"/>
-        </properties>
-      </component>
-      <component id="5d1b3" class="javax.swing.JLabel" binding="pgLabel">
-        <constraints>
-          <grid row="2" column="4" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Label"/>
-        </properties>
-      </component>
-      <component id="3516e" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-        <constraints>
-          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
+      <grid id="ac614" binding="algoActionsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="West"/>
         <properties/>
-      </component>
-      <component id="b6e45" class="javax.swing.JButton" binding="wyswietlButton" default-binding="true">
-        <constraints>
-          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Wyswietl"/>
-        </properties>
-      </component>
-      <component id="feaf4" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="wynik"/>
-        </properties>
-      </component>
-      <component id="52db6" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="rozegrane gry"/>
-        </properties>
-      </component>
-      <component id="a0a63" class="javax.swing.JButton" binding="ustawButton" default-binding="true">
-        <constraints>
-          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Ustaw"/>
-        </properties>
-      </component>
-      <component id="9df15" class="javax.swing.JLabel" binding="networkGrade">
-        <constraints>
-          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
+        <border type="none"/>
+        <children>
+          <grid id="497c9" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="21d1b" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+                <constraints border-constraint="North"/>
+                <properties>
+                  <model>
+                    <item value="One-Time Testing"/>
+                    <item value="Test until..."/>
+                  </model>
+                </properties>
+              </component>
+              <component id="a6245" class="javax.swing.JLabel" binding="operationParameterDescription">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <text value="method parameter"/>
+                </properties>
+              </component>
+              <component id="702c8" class="javax.swing.JTextField" binding="textField2">
+                <constraints border-constraint="South"/>
+                <properties/>
+              </component>
+            </children>
+          </grid>
+          <grid id="7aaa4" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="South"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="7240a" class="javax.swing.JButton" binding="button3" default-binding="true">
+                <constraints border-constraint="North"/>
+                <properties>
+                  <text value="Execute Method"/>
+                </properties>
+              </component>
+              <component id="94917" class="javax.swing.JButton" binding="nextGenerationButton">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <text value="Next Generation"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <component id="f6f52" class="javax.swing.JLabel" binding="statusLabel">
+        <constraints border-constraint="South"/>
         <properties>
           <text value="Label"/>
-        </properties>
-      </component>
-      <component id="ae7f5" class="javax.swing.JLabel" binding="networkGames">
-        <constraints>
-          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Label"/>
-        </properties>
-      </component>
-      <component id="d03cf" class="javax.swing.JButton" binding="testujButton" default-binding="true">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Testuj"/>
-        </properties>
-      </component>
-      <component id="ef99c" class="javax.swing.JButton" binding="nextGenerationButton" default-binding="true">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="NextGeneration"/>
-        </properties>
-      </component>
-      <component id="d6009" class="javax.swing.JButton" binding="testujDoButton" default-binding="true">
-        <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="TestujDo"/>
         </properties>
       </component>
     </children>

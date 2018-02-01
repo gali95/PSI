@@ -16,12 +16,15 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -85,17 +88,8 @@ public class MainWindow {
                     (new Thread(temp)).start();
                 } else if (e.getSource() == saveBreederButton) {
                     SaveBreeder();
-                } else if (e.getSource() == ustawButton) {
-                    UstawButton();
-                } else if (e.getSource() == wyswietlButton) {
-                    WyswietlButton();
-                } else if (e.getSource() == testujButton) {
-                    TestujButton();
-
                 } else if (e.getSource() == nextGenerationButton) {
                     NextGenerationButton();
-                } else if (e.getSource() == testujDoButton) {
-                    TestujDoButton();
                 }
             }
         };
@@ -103,19 +97,43 @@ public class MainWindow {
         button1.addActionListener(fajny);
         newBreederButton.addActionListener(fajny);
         saveBreederButton.addActionListener(fajny);
-        ustawButton.addActionListener(fajny);
-        wyswietlButton.addActionListener(fajny);
-        testujButton.addActionListener(fajny);
         nextGenerationButton.addActionListener(fajny);
-        testujDoButton.addActionListener(fajny);
 
         comboBox1.addItemListener(new ItemListener() {
 
             @Override
             public void itemStateChanged(ItemEvent e) {
-
+                if (e.getStateChange() != ItemEvent.SELECTED) return;
+                switch (e.getItemSelectable().getSelectedObjects()[0].toString()) {
+                    case "One-Time Testing":
+                        operationParameterDescription.setText("Tests per subject:");
+                        button3.setText("Execute Tests");
+                        break;
+                    case "Test until...":
+                        operationParameterDescription.setText("Desired subject score:");
+                        button3.setText("Start Learning");
+                        break;
+                    default:
+                        System.out.println(e.getItemSelectable().getSelectedObjects()[0].toString());
+                        System.out.println(e.getStateChange());
+                }
             }
         });
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switch (button3.getText()) {
+                    case "Execute Tests":
+                        TestujButton(Integer.parseInt(textField2.getText()));
+                        break;
+                    case "Start Learning":
+                        TestujDoButton(Integer.parseInt(textField2.getText()));
+                        break;
+                }
+            }
+        });
+
+
     }
 
     public void LabirynthExampleButton() {
@@ -142,43 +160,45 @@ public class MainWindow {
         breeder2.ResetGrades();
     }
 
-    public void UstawButton() {
-        choosen = (ASIMouse) breeder2.getPopulation()[Integer.parseInt(textField1.getText())];
+    public void UstawButton(Geneable clicked) {
+        choosen = (ASIMouse) clicked;
     }
 
-    public void WyswietlButton() {
-        networkGrade.setText(String.valueOf(breeder2.getPopulation()[Integer.parseInt(textField1.getText())].GetGrades()));
-        //networkGames.setText(String.valueOf(breeder.GetNPCNetwork(Integer.parseInt(textField1.getText())).getGradesDone()));
+    public void WyswietlButton(Geneable clicked) {
+        // TODO
     }
 
     public double GetBestGrade() {
         return breeder2.getPopulation()[0].GetGrades();
     }
 
-    public void TestujDoButton() {
-        breeder2.TestUntil(Integer.parseInt(textField1.getText()));
+    public void TestujDoButton(int minimalObjectsToStop) {
+        breeder2.TestUntil(minimalObjectsToStop);
     }
 
-    public void TestujButton() {
+    public void TestujButton(int numOfTestPerObject) {
         przerwijFlag = false;
         koniecTest = false;
         koniecPetli = false;
 
+        breeder2.getTester().TestMultiple(breeder2.getPopulation(), numOfTestPerObject);
+    }
 
-        breeder2.getTester().TestMultiple(breeder2.getPopulation(), Integer.valueOf(textField2.getText()));
+    public void TestujDoButton() {
+        //TODO remove func
+    }
 
-
+    public void TestujButton() {
+        //TODO remove func
     }
 
     public void CreateBreederFromForm(String networkNum)//String networkAttackFormat,String networkMovementFormat)
     {
-
         int networksNum = Integer.parseInt(networkNum);
-
         breeder2 = new GeneticAlgorithmLabirynth(this, progressu, networksNum);
         SetBreederInfo();
         informacyje = new PopulationInfo(8, 1.0);
-
+        list1 = new JList(breeder2.getPopulation());
     }
 
     public static void main(String[] args) {
@@ -193,7 +213,7 @@ public class MainWindow {
     }
 
     public void ConnectProgressLabel() {
-        progressu.SetLabel(pgLabel);
+        progressu.SetLabel(statusLabel);
     }
 
 
@@ -209,6 +229,7 @@ public class MainWindow {
 
         }
     }
+
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
@@ -226,71 +247,65 @@ public class MainWindow {
      */
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(6, 5, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setLayout(new BorderLayout(0, 0));
+        populationPanel = new JPanel();
+        populationPanel.setLayout(new BorderLayout(0, 0));
+        mainPanel.add(populationPanel, BorderLayout.EAST);
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.add(panel2, new GridConstraints(0, 1, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        label1.setText("Aktualne pokolenie");
-        panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.setLayout(new BorderLayout(0, 0));
+        populationPanel.add(panel1, BorderLayout.NORTH);
         breederSize = new JLabel();
-        breederSize.setText("Label");
-        panel2.add(breederSize, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.add(panel3, new GridConstraints(2, 0, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("ilosc powtorzen");
-        panel3.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        mainPanel.add(panel4, new GridConstraints(2, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        textField2 = new JTextField();
-        panel4.add(textField2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        button1 = new JButton();
-        button1.setText("Gra Testowa");
-        mainPanel.add(button1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        breederSize.setText("population size");
+        panel1.add(breederSize, BorderLayout.CENTER);
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new BorderLayout(0, 0));
+        panel1.add(panel2, BorderLayout.SOUTH);
         newBreederButton = new JButton();
-        newBreederButton.setText("New Breeder");
-        mainPanel.add(newBreederButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        newBreederButton.setText("New Population");
+        panel2.add(newBreederButton, BorderLayout.CENTER);
         saveBreederButton = new JButton();
         saveBreederButton.setText("Save Results");
-        mainPanel.add(saveBreederButton, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        pgLabel = new JLabel();
-        pgLabel.setText("Label");
-        mainPanel.add(pgLabel, new GridConstraints(2, 4, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        textField1 = new JTextField();
-        mainPanel.add(textField1, new GridConstraints(2, 2, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        wyswietlButton = new JButton();
-        wyswietlButton.setText("Wyswietl");
-        mainPanel.add(wyswietlButton, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setText("wynik");
-        mainPanel.add(label3, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label4 = new JLabel();
-        label4.setText("rozegrane gry");
-        mainPanel.add(label4, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        ustawButton = new JButton();
-        ustawButton.setText("Ustaw");
-        mainPanel.add(ustawButton, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        networkGrade = new JLabel();
-        networkGrade.setText("Label");
-        mainPanel.add(networkGrade, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        networkGames = new JLabel();
-        networkGames.setText("Label");
-        mainPanel.add(networkGames, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        testujButton = new JButton();
-        testujButton.setText("Testuj");
-        mainPanel.add(testujButton, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(saveBreederButton, BorderLayout.SOUTH);
+        listAndDetailsPanel = new JPanel();
+        listAndDetailsPanel.setLayout(new BorderLayout(0, 0));
+        mainPanel.add(listAndDetailsPanel, BorderLayout.CENTER);
+        list1 = new JList();
+        listAndDetailsPanel.add(list1, BorderLayout.CENTER);
+        final JLabel label1 = new JLabel();
+        label1.setText("object details");
+        listAndDetailsPanel.add(label1, BorderLayout.NORTH);
+        button1 = new JButton();
+        button1.setText("Test Game");
+        listAndDetailsPanel.add(button1, BorderLayout.SOUTH);
+        algoActionsPanel = new JPanel();
+        algoActionsPanel.setLayout(new BorderLayout(0, 0));
+        mainPanel.add(algoActionsPanel, BorderLayout.WEST);
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new BorderLayout(0, 0));
+        algoActionsPanel.add(panel3, BorderLayout.NORTH);
+        comboBox1 = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("One-Time Testing");
+        defaultComboBoxModel1.addElement("Test until...");
+        comboBox1.setModel(defaultComboBoxModel1);
+        panel3.add(comboBox1, BorderLayout.NORTH);
+        operationParameterDescription = new JLabel();
+        operationParameterDescription.setText("method parameter");
+        panel3.add(operationParameterDescription, BorderLayout.CENTER);
+        textField2 = new JTextField();
+        panel3.add(textField2, BorderLayout.SOUTH);
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new BorderLayout(0, 0));
+        algoActionsPanel.add(panel4, BorderLayout.SOUTH);
+        button3 = new JButton();
+        button3.setText("Execute Method");
+        panel4.add(button3, BorderLayout.NORTH);
         nextGenerationButton = new JButton();
-        nextGenerationButton.setText("NextGeneration");
-        mainPanel.add(nextGenerationButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        testujDoButton = new JButton();
-        testujDoButton.setText("TestujDo");
-        mainPanel.add(testujDoButton, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        nextGenerationButton.setText("Next Generation");
+        panel4.add(nextGenerationButton, BorderLayout.CENTER);
+        statusLabel = new JLabel();
+        statusLabel.setText("Label");
+        mainPanel.add(statusLabel, BorderLayout.SOUTH);
     }
 
     /**

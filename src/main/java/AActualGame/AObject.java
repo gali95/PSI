@@ -29,7 +29,7 @@ public class AObject {
     {
         physics = new ADetailedObjectMovement();
         physics.target = this;
-        img = AGraphicFiles.materials[graphicFileIndex];
+        img = AGraphicFiles.getMaterial(graphicFileIndex);
         garbageDay = false;
         density = false;
         location = null;

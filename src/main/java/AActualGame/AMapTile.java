@@ -15,11 +15,11 @@ public class AMapTile {
     public BufferedImage turf;
     public List<AObject> content;
     public AMapTile(String imgPath) throws IOException {
-        turf = AGraphicFiles.materials[0];//ImageIO.read(new File(imgPath));
+        turf = AGraphicFiles.getMaterial(0);//ImageIO.read(new File(imgPath));
         content = new LinkedList<AObject>();
     }
     public AMapTile(int imgIndex) throws IOException {
-        turf = AGraphicFiles.materials[0];
+        turf = AGraphicFiles.getMaterial(0);
         content = new LinkedList<AObject>();
     }
     public void InteractionWithAll(AObject initiazer)

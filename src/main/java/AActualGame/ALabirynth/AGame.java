@@ -107,12 +107,7 @@ public class AGame {   // logika całej rozrywki labiryntu, umożliwiajac jego s
         }
         times.readFromFile.Start();
         Scanner fl = null;
-        try {
-            fl = new Scanner(new File("labirynt.txt"));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        fl = new Scanner(this.getClass().getResourceAsStream("/labirynt.txt"));
         int[] chars = new int[100];
         int sum = 0,sum2 = 0;
         for(int i=0;i<100;i++)
