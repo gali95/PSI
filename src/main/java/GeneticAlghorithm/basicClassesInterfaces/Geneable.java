@@ -37,5 +37,13 @@ public interface Geneable {
         return mine.compareTo(others) ;
     }
     public void Mutate(double chanceTo);  // zmutowanie aktualnego genotypu, chanceTo jest to szansa w zakresie 0.0-1.0 ktora definiuje szanse KAŻDEGO genu na bycie poddanym mutacji
+    default String GetName()
+    {
+        return "Geneable";
+    }
+    default String GetDescription()
+    {
+        return "Grades: " + GetGrades();
+    }
 
 }

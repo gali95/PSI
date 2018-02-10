@@ -55,16 +55,16 @@
             <constraints border-constraint="Center"/>
             <properties/>
           </component>
-          <component id="14782" class="javax.swing.JLabel">
-            <constraints border-constraint="North"/>
-            <properties>
-              <text value="object details"/>
-            </properties>
-          </component>
           <component id="aab4d" class="javax.swing.JButton" binding="button1">
             <constraints border-constraint="South"/>
             <properties>
               <text value="Test Game"/>
+            </properties>
+          </component>
+          <component id="9983c" class="javax.swing.JLabel" binding="objectDescription">
+            <constraints border-constraint="North"/>
+            <properties>
+              <text value="object description"/>
             </properties>
           </component>
         </children>

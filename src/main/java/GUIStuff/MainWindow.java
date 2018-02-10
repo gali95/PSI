@@ -1,19 +1,11 @@
 package GUIStuff;
 
-import AActualGame.ACharacter;
 import AActualGame.ALabirynth.ASIMouse;
 import AActualGame.ALabirynth.tempGameRunnableLauncher;
-import AActualGame.ATrainSIGame;
 import GeneticAlghorithm.basicClassesInterfaces.Geneable;
 import GeneticAlghorithm.defaultImplementations.AGameSi.Labirynth.GeneticAlgorithmLabirynth;
-import GeneticAlghorithm.defaultImplementations.AGameSi.OnlyWeights.GeneticAlgorithmWeights;
 import GeneticAlghorithm.defaultImplementations.AGameSi.PopulationInfo;
 import NNetworks.DoubleEvolutionNetwork.NPCNetwork;
-import NNetworks.DoubleEvolutionNetwork.NPCNetworkBreeder;
-import NNetworks.DoubleEvolutionNetwork.NPCNetworkBreederPararelInit;
-import NNetworks.NeuronBetter;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -24,10 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Lach on 2016-12-07.
@@ -48,6 +36,8 @@ public class MainWindow {
     private JLabel operationParameterDescription;
     private JButton button3;
     private JComboBox comboBox1;
+    private JLabel objectDescription;
+
 
 
     public GeneticAlgorithmLabirynth breeder2;
@@ -132,8 +122,6 @@ public class MainWindow {
                 }
             }
         });
-
-
     }
 
     public void LabirynthExampleButton() {
@@ -165,7 +153,7 @@ public class MainWindow {
     }
 
     public void WyswietlButton(Geneable clicked) {
-        // TODO
+        objectDescription.setText(clicked.GetDescription() + "\n" );
     }
 
     public double GetBestGrade() {
@@ -184,32 +172,34 @@ public class MainWindow {
         breeder2.getTester().TestMultiple(breeder2.getPopulation(), numOfTestPerObject);
     }
 
-    public void TestujDoButton() {
-        //TODO remove func
-    }
-
-    public void TestujButton() {
-        //TODO remove func
-    }
-
     public void CreateBreederFromForm(String networkNum)//String networkAttackFormat,String networkMovementFormat)
     {
         int networksNum = Integer.parseInt(networkNum);
         breeder2 = new GeneticAlgorithmLabirynth(this, progressu, networksNum);
         SetBreederInfo();
         informacyje = new PopulationInfo(8, 1.0);
+
         list1 = new JList(breeder2.getPopulation());
+        listAndDetailsPanel.add(list1, BorderLayout.CENTER);
+        list1.setCellRenderer(new GeneableCellRenderer());
+        list1.setVisibleRowCount(4);
+
+        list1.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                WyswietlButton(breeder2.getPopulation()[e.getFirstIndex()]);
+                UstawButton(breeder2.getPopulation()[e.getFirstIndex()]);
+            }
+        });
     }
+
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("MainWindow");
-        MainWindow dat = new MainWindow();
-        dat.parento = frame;
-        frame.setContentPane(dat.mainPanel);
+        frame.setContentPane(new MainWindow().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        dat.ConnectProgressLabel();
     }
 
     public void ConnectProgressLabel() {
@@ -271,9 +261,6 @@ public class MainWindow {
         mainPanel.add(listAndDetailsPanel, BorderLayout.CENTER);
         list1 = new JList();
         listAndDetailsPanel.add(list1, BorderLayout.CENTER);
-        final JLabel label1 = new JLabel();
-        label1.setText("object details");
-        listAndDetailsPanel.add(label1, BorderLayout.NORTH);
         button1 = new JButton();
         button1.setText("Test Game");
         listAndDetailsPanel.add(button1, BorderLayout.SOUTH);
@@ -306,6 +293,10 @@ public class MainWindow {
         statusLabel = new JLabel();
         statusLabel.setText("Label");
         mainPanel.add(statusLabel, BorderLayout.SOUTH);
+
+        objectDescription = new JLabel();
+        objectDescription.setText("object description");
+        listAndDetailsPanel.add(objectDescription, BorderLayout.NORTH);
     }
 
     /**

@@ -27,7 +27,7 @@ public class MainWindowTotalRandomLoop implements Runnable{
         while(!sauce.koniecPetli)
         {
 
-            sauce.TestujButton();
+            sauce.TestujButton(1);
 
             while(!sauce.koniecTest)
             {
