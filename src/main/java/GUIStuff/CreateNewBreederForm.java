@@ -29,9 +29,8 @@ public class CreateNewBreederForm implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == OKButton) {
                     source.CreateBreederFromForm(textField1.getText());//,textField3.getText(),textField2.getText());
-                } else {
-                    fata.dispatchEvent(new WindowEvent(fata, WindowEvent.WINDOW_CLOSING));
                 }
+                fata.dispatchEvent(new WindowEvent(fata, WindowEvent.WINDOW_CLOSING));
             }
         };
         OKButton.addActionListener(fajny);
@@ -42,7 +41,7 @@ public class CreateNewBreederForm implements Runnable {
     public void run() {
         JFrame frame = new JFrame("CreateNewBreederForm");
         frame.setContentPane(this.nazw);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         fata = frame;
         frame.pack();
         frame.setVisible(true);
