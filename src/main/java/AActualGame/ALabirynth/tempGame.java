@@ -36,16 +36,6 @@ public class tempGame {
     public tempGame() {
 
         $$$setupUI$$$();
-        ActionListener act = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == button1) {
-                    logic.zakoncz = true;
-                }
-            }
-        };
-
-        button1.addActionListener(act);
 
         /*
         tempGame.PlayerUpAction npa = new tempGame.PlayerUpAction();
@@ -74,7 +64,6 @@ public class tempGame {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         namae = new ADisplay();
 
     }
@@ -83,7 +72,7 @@ public class tempGame {
     public void runWithGraphic() {
         JFrame frame = new JFrame("tempGame");
         frame.setContentPane(namae);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         logic.Sciany();
@@ -129,12 +118,8 @@ public class tempGame {
      */
     private void $$$setupUI$$$() {
         createUIComponents();
-        namae.setLayout(new BorderLayout(0, 0));
         namae.setMinimumSize(new Dimension(500, 500));
         namae.setPreferredSize(new Dimension(500, 600));
-        button1 = new JButton();
-        button1.setText("Button");
-        namae.add(button1, BorderLayout.SOUTH);
     }
 
     /**

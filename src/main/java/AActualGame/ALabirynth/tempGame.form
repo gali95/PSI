@@ -9,13 +9,6 @@
       <preferredSize width="500" height="600"/>
     </properties>
     <border type="none"/>
-    <children>
-      <component id="66ff4" class="javax.swing.JButton" binding="button1" default-binding="true">
-        <constraints border-constraint="South"/>
-        <properties>
-          <text value="Button"/>
-        </properties>
-      </component>
-    </children>
+    <children/>
   </grid>
 </form>

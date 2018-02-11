@@ -42,7 +42,6 @@ public class ExampleGame implements Runnable {
         przerwij = false;
         dsp = new ADisplay();
         game = dsp;
-        // TODO: place custom component creation code here
 
     }
 

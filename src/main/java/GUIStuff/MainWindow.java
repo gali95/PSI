@@ -124,8 +124,8 @@ public class MainWindow {
         list1.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting()) return;
-                int selectionIndex = ((JList)(e.getSource())).getLeadSelectionIndex();
+                if (!e.getValueIsAdjusting()) return;
+                int selectionIndex = ((JList) (e.getSource())).getLeadSelectionIndex();
 
                 WyswietlButton(breeder2.getPopulation()[selectionIndex]);
                 UstawButton(breeder2.getPopulation()[selectionIndex]);
@@ -302,7 +302,6 @@ public class MainWindow {
         statusLabel = new JLabel();
         statusLabel.setText("Label");
         mainPanel.add(statusLabel, BorderLayout.SOUTH);
-
     }
 
     /**
