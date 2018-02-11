@@ -70,7 +70,7 @@ public class ADisplay extends JPanel {
     }
 
     public void paintTurf(Graphics g) throws IOException {
-        BufferedImage turf = ImageIO.read(new File("tile.jpg"));
+        BufferedImage turf = AGraphicFiles.getMaterial(0);
         if(sourceStartX+sizeX > source.tiles.length) sourceEndX = source.tiles.length-1;
         else sourceEndX = sourceStartX+sizeX-1;
         if(sourceStartY+sizeY > source.tiles[0].length) sourceEndY = source.tiles[0].length-1;

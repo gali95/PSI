@@ -39,7 +39,6 @@ public class MainWindow {
     private JLabel objectDescription;
 
 
-
     public GeneticAlgorithmLabirynth breeder2;
     private MainWindow myself;
     public ProgressLabel progressu;
@@ -122,6 +121,19 @@ public class MainWindow {
                 }
             }
         });
+        list1.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(!e.getValueIsAdjusting()) return;
+                int selectionIndex = ((JList)(e.getSource())).getLeadSelectionIndex();
+
+                WyswietlButton(breeder2.getPopulation()[selectionIndex]);
+                UstawButton(breeder2.getPopulation()[selectionIndex]);
+            }
+        });
+        list1.setCellRenderer(new GeneableCellRenderer());
+        list1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ConnectProgressLabel();
     }
 
     public void LabirynthExampleButton() {
@@ -139,6 +151,7 @@ public class MainWindow {
 
     public void SortBreeder() {
         breeder2.SortByGrades();
+        list1.setListData(breeder2.getPopulation());
         zakonczonoTestowanie = true;
     }
 
@@ -153,7 +166,7 @@ public class MainWindow {
     }
 
     public void WyswietlButton(Geneable clicked) {
-        objectDescription.setText(clicked.GetDescription() + "\n" );
+        objectDescription.setText(clicked.GetDescription() + "\n");
     }
 
     public double GetBestGrade() {
@@ -179,18 +192,7 @@ public class MainWindow {
         SetBreederInfo();
         informacyje = new PopulationInfo(8, 1.0);
 
-        list1 = new JList(breeder2.getPopulation());
-        listAndDetailsPanel.add(list1, BorderLayout.CENTER);
-        list1.setCellRenderer(new GeneableCellRenderer());
-        list1.setVisibleRowCount(4);
-
-        list1.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                WyswietlButton(breeder2.getPopulation()[e.getFirstIndex()]);
-                UstawButton(breeder2.getPopulation()[e.getFirstIndex()]);
-            }
-        });
+        list1.setListData(breeder2.getPopulation());
     }
 
 
@@ -200,6 +202,7 @@ public class MainWindow {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
     }
 
     public void ConnectProgressLabel() {
@@ -264,6 +267,9 @@ public class MainWindow {
         button1 = new JButton();
         button1.setText("Test Game");
         listAndDetailsPanel.add(button1, BorderLayout.SOUTH);
+        objectDescription = new JLabel();
+        objectDescription.setText("object description");
+        listAndDetailsPanel.add(objectDescription, BorderLayout.NORTH);
         algoActionsPanel = new JPanel();
         algoActionsPanel.setLayout(new BorderLayout(0, 0));
         mainPanel.add(algoActionsPanel, BorderLayout.WEST);
@@ -293,10 +299,6 @@ public class MainWindow {
         statusLabel = new JLabel();
         statusLabel.setText("Label");
         mainPanel.add(statusLabel, BorderLayout.SOUTH);
-
-        objectDescription = new JLabel();
-        objectDescription.setText("object description");
-        listAndDetailsPanel.add(objectDescription, BorderLayout.NORTH);
     }
 
     /**

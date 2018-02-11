@@ -72,6 +72,7 @@ public class CreateNewBreederForm implements Runnable {
         ANULUJButton.setText("ANULUJ");
         nazw.add(ANULUJButton);
         textField1 = new JTextField();
+        textField1.setMinimumSize(new Dimension(140, 24));
         textField1.setPreferredSize(new Dimension(140, 24));
         textField1.setText("");
         nazw.add(textField1);
