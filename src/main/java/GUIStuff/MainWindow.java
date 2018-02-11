@@ -134,6 +134,9 @@ public class MainWindow {
         list1.setCellRenderer(new GeneableCellRenderer());
         list1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ConnectProgressLabel();
+
+        operationParameterDescription.setText("Tests per subject:");
+        button3.setText("Execute Tests");
     }
 
     public void LabirynthExampleButton() {
@@ -299,6 +302,7 @@ public class MainWindow {
         statusLabel = new JLabel();
         statusLabel.setText("Label");
         mainPanel.add(statusLabel, BorderLayout.SOUTH);
+
     }
 
     /**
