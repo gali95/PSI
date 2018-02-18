@@ -58,22 +58,9 @@ public class GeneticAlgorithmLabirynth extends GeneticAlgorithm{  // implementac
 
     public synchronized void TestUntil(int score) {            // funkcja ktora zawiera w sobie caly algorytm genetyczny - testuje populacje i tworzy nowe pokolenie az conajmniej jedne z jej osobnikow nie osiagnie wyniku "score"
 
-        while(true) {
-            this.getTester().TestMultiple(this.getPopulation(), 1);
-            fata.zakonczonoTestowanie = false;
-            while (!fata.zakonczonoTestowanie) {
-                try {
-                    this.wait(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            if(this.getPopulation()[0].GetGrades() >= score) break;
-
-            setPopulation(getNextGen().NewGeneration(getPopulation(),getMixer()));
-            MutateAll(mutationChance);
-            ResetGrades();
-        }
+        TestUntilThread threadObject = new TestUntilThread();
+        threadObject.init(this,fata,score);
+        (new Thread(threadObject)).start();
 
     }
 

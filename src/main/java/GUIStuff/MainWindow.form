@@ -29,7 +29,7 @@
                 <border type="none"/>
                 <children>
                   <component id="a3f" class="javax.swing.JButton" binding="newBreederButton">
-                    <constraints border-constraint="Center"/>
+                    <constraints border-constraint="North"/>
                     <properties>
                       <text value="New Population"/>
                     </properties>
@@ -38,6 +38,12 @@
                     <constraints border-constraint="South"/>
                     <properties>
                       <text value="Save Results"/>
+                    </properties>
+                  </component>
+                  <component id="c38c5" class="javax.swing.JButton" binding="resetGradesButton" default-binding="true">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="Reset Grades"/>
                     </properties>
                   </component>
                 </children>

@@ -159,6 +159,10 @@ public class AGame {   // logika całej rozrywki labiryntu, umożliwiajac jego s
         actTime = 0;
         while(!zakoncz)
         {
+            if(fata.GetStopOperationFlag())
+            {
+                FinishEarlier();
+            }
             times.physicRoutine.Start();
             /*
             try {
@@ -190,6 +194,26 @@ public class AGame {   // logika całej rozrywki labiryntu, umożliwiajac jego s
         */
     }
 
+    private void FinishEarlier()
+    {
+        while(testNum>0)
+        {
+            if(progressu.Increase())
+            {
+                fata.SortBreeder();
+                fata.UpdateStatistic();
+                if(!fata.isTestUntilOngoing())
+                {
+                    fata.OperationStopped();
+                }
+
+            }
+            testNum--;
+        }
+        zakoncz = true;
+        ((ASIMouse)hero).dontGrade = false;
+    }
+
     public void GameFinished()
     {
         Reset();
@@ -202,6 +226,11 @@ public class AGame {   // logika całej rozrywki labiryntu, umożliwiajac jego s
         {
             fata.SortBreeder();
             fata.UpdateStatistic();
+            if(!fata.isTestUntilOngoing())
+            {
+                fata.OperationStopped();
+            }
+
         }
         hero.physics = new ADetailedObjectMovement();
         hero.physics.target = hero;
@@ -217,6 +246,7 @@ public class AGame {   // logika całej rozrywki labiryntu, umożliwiajac jego s
         else
         {
             zakoncz = true;
+            ((ASIMouse)hero).dontGrade = false;
         }
     }
 

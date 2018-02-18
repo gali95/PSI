@@ -37,6 +37,7 @@ public class MainWindow {
     private JButton button3;
     private JComboBox comboBox1;
     private JLabel objectDescription;
+    private JButton resetGradesButton;
 
 
     public GeneticAlgorithmLabirynth breeder2;
@@ -50,6 +51,8 @@ public class MainWindow {
     public Geneable besto;
     public PopulationInfo informacyje;
     public boolean zakonczonoTestowanie;
+    private boolean stopOperationFlag;
+    private boolean testUntilOngoing;
 
     public boolean koniecTest;
     public boolean koniecPetli;
@@ -93,19 +96,7 @@ public class MainWindow {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() != ItemEvent.SELECTED) return;
-                switch (e.getItemSelectable().getSelectedObjects()[0].toString()) {
-                    case "One-Time Testing":
-                        operationParameterDescription.setText("Tests per subject:");
-                        button3.setText("Execute Tests");
-                        break;
-                    case "Test until...":
-                        operationParameterDescription.setText("Desired subject score:");
-                        button3.setText("Start Learning");
-                        break;
-                    default:
-                        System.out.println(e.getItemSelectable().getSelectedObjects()[0].toString());
-                        System.out.println(e.getStateChange());
-                }
+                SetExecuteMethodButtonLabel();
             }
         });
         button3.addActionListener(new ActionListener() {
@@ -118,6 +109,8 @@ public class MainWindow {
                     case "Start Learning":
                         TestujDoButton(Integer.parseInt(textField2.getText()));
                         break;
+                    case "Cancel":
+                        stopOperationFlag = true;
                 }
             }
         });
@@ -129,6 +122,7 @@ public class MainWindow {
 
                 WyswietlButton(breeder2.getPopulation()[selectionIndex]);
                 UstawButton(breeder2.getPopulation()[selectionIndex]);
+                GUIStateListSelection();
             }
         });
         list1.setCellRenderer(new GeneableCellRenderer());
@@ -137,6 +131,16 @@ public class MainWindow {
 
         operationParameterDescription.setText("Tests per subject:");
         button3.setText("Execute Tests");
+
+        GUIStateInitial();
+        GUIStateNoListSelection();
+        resetGradesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                breeder2.ResetGrades();
+                SortBreeder();
+            }
+        });
     }
 
     public void LabirynthExampleButton() {
@@ -177,7 +181,10 @@ public class MainWindow {
     }
 
     public void TestujDoButton(int minimalObjectsToStop) {
+        setTestUntilOngoing(true);
         breeder2.TestUntil(minimalObjectsToStop);
+        stopOperationFlag = false;
+        GUIStateOperationOngoing();
     }
 
     public void TestujButton(int numOfTestPerObject) {
@@ -186,6 +193,8 @@ public class MainWindow {
         koniecPetli = false;
 
         breeder2.getTester().TestMultiple(breeder2.getPopulation(), numOfTestPerObject);
+        stopOperationFlag = false;
+        GUIStateOperationOngoing();
     }
 
     public void CreateBreederFromForm(String networkNum)//String networkAttackFormat,String networkMovementFormat)
@@ -196,6 +205,7 @@ public class MainWindow {
         informacyje = new PopulationInfo(8, 1.0);
 
         list1.setListData(breeder2.getPopulation());
+        GUIStateBreederCreated();
     }
 
 
@@ -226,6 +236,78 @@ public class MainWindow {
         }
     }
 
+    private void GUIStateInitial() {
+        saveBreederButton.setEnabled(false);
+        button1.setEnabled(false);
+        nextGenerationButton.setEnabled(false);
+        button3.setEnabled(false);
+        comboBox1.setEnabled(false);
+        newBreederButton.setEnabled(true);
+        resetGradesButton.setEnabled(false);
+        textField2.setEnabled(false);
+    }
+
+    private void GUIStateBreederCreated() {
+        saveBreederButton.setEnabled(true);
+        nextGenerationButton.setEnabled(true);
+        button3.setEnabled(true);
+        comboBox1.setEnabled(true);
+        newBreederButton.setEnabled(true);
+        resetGradesButton.setEnabled(true);
+        textField2.setEnabled(true);
+    }
+
+    private void GUIStateListSelection() {
+        button1.setEnabled(true);
+    }
+
+    private void GUIStateNoListSelection() {
+        button1.setEnabled(false);
+    }
+
+    public void GUIStateOperationOngoing() {
+        saveBreederButton.setEnabled(false);
+        nextGenerationButton.setEnabled(false);
+        button3.setEnabled(true);
+        comboBox1.setEnabled(false);
+        newBreederButton.setEnabled(false);
+        button1.setEnabled(false);
+        resetGradesButton.setEnabled(false);
+        button3.setText("Cancel");
+        textField2.setEnabled(false);
+    }
+
+    private void SetExecuteMethodButtonLabel() {
+        switch (comboBox1.getSelectedObjects()[0].toString()) {
+            case "One-Time Testing":
+                operationParameterDescription.setText("Tests per subject:");
+                button3.setText("Execute Tests");
+                nextGenerationButton.setEnabled(true);
+                break;
+            case "Test until...":
+                operationParameterDescription.setText("Desired subject score:");
+                button3.setText("Start Learning");
+                nextGenerationButton.setEnabled(false);
+                break;
+        }
+    }
+
+    public void OperationStopped() {
+        SetExecuteMethodButtonLabel();
+        GUIStateBreederCreated();
+    }
+
+    public boolean GetStopOperationFlag() {
+        return stopOperationFlag;
+    }
+
+    public boolean isTestUntilOngoing() {
+        return testUntilOngoing;
+    }
+
+    public void setTestUntilOngoing(boolean testUntilOngoing) {
+        this.testUntilOngoing = testUntilOngoing;
+    }
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
@@ -258,10 +340,13 @@ public class MainWindow {
         panel1.add(panel2, BorderLayout.SOUTH);
         newBreederButton = new JButton();
         newBreederButton.setText("New Population");
-        panel2.add(newBreederButton, BorderLayout.CENTER);
+        panel2.add(newBreederButton, BorderLayout.NORTH);
         saveBreederButton = new JButton();
         saveBreederButton.setText("Save Results");
         panel2.add(saveBreederButton, BorderLayout.SOUTH);
+        resetGradesButton = new JButton();
+        resetGradesButton.setText("Reset Grades");
+        panel2.add(resetGradesButton, BorderLayout.CENTER);
         listAndDetailsPanel = new JPanel();
         listAndDetailsPanel.setLayout(new BorderLayout(0, 0));
         mainPanel.add(listAndDetailsPanel, BorderLayout.CENTER);
