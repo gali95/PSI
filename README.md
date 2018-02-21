@@ -3,8 +3,8 @@
 Genetic Algorithm implemented and used on example of virtual mice navigating through labirynth.
 
 Requied software:
--Apache Maven 3.5.2
--Java version: 1.8.0_161
+- Apache Maven 3.5.2
+- Java version: 1.8.0_161
 
 How to run:
 - In terminal, while being in main folder of the repo run:
