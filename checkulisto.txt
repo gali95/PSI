@@ -1,0 +1,25 @@
+TODO:
+	resize GUI
+	inform about actual population
+		generation
+		number of mouses having certain scores (0...7)
+	"test until..." updates status label during work
+		status label is forced to not change status for X seconds
+	object list scrolling
+	secure user input
+		new population size
+		uncheck selected object when list is changed/refreshed
+		procedure parameter label (tests per subject/desired subject score)
+		
+		
+ADEED AFTER:
+	forbid to interact with mainWindow when other windows are opened (Test Game/ new breeder Form)
+		
+		
+DONE
+	turn off every button when there is no population                   
+	turn off test game button if there is nothing selected
+	turn off other buttons when "test until..." is activated
+	turn off other buttons when "execute tests" is activated
+	allow to deactivate "test until..."
+	allow to deactivate "execute tests"
